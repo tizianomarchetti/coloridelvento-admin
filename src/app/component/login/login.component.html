@@ -1,0 +1,63 @@
+<div class="container-fluid min-vh-100 py-5 d-flex align-items-center justify-content-center">
+    <div *ngIf="!message; else messageTemplate" class="row" style="min-width: 330px;">
+        <form class="h-100" [formGroup]="formData">
+
+            <div *ngIf="loginError" class="text-center">
+                <p class="text-danger fw-bold">{{loginError}}</p>
+            </div>
+
+            <!-- email -->
+            <mat-form-field class="form-field w-100 my-2">
+                <input matInput type="email" id="email" placeholder="Email*" formControlName="email">
+            
+                <mat-error *ngIf="formData.get('email').invalid && formData.get('email').touched && formData.get('email').dirty">
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('email').errors?.required">
+                        Campo obbligatorio.
+                    </small> 
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('email').errors?.email || formData.get('email').errors.pattern">
+                        Formato email errato.
+                    </small>
+                </mat-error>
+            </mat-form-field>
+
+            <!-- password -->
+            <mat-form-field class="form-field w-100 my-2">
+                <input matInput type="password" id="password" placeholder="Password*" formControlName="password">
+            
+                <mat-error *ngIf="formData.get('password').invalid && formData.get('password').touched && formData.get('password').dirty">
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('password').errors?.required">
+                        Campo obbligatorio.
+                    </small> 
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('password').errors?.minlength">
+                        Lunghezza minima {{formData.get('password').errors.minlength.requiredLength}} caratteri.
+                    </small>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-checkbox *ngIf="isLogin"
+                color="primary"
+                id="rememberMe"
+                formControlName="rememberMe">
+                Ricordami
+            </mat-checkbox>
+
+            <button type="submit" class="w-100 my-4 btn btn-primary"
+                (click)="doAction()" [disabled]="!formData.valid">{{(isLogin ? 'Login' : 'Registrati')}}</button>
+        
+            <p class="text-center mat-body">Oppure <span class="text-primary fw-bold" role="button" 
+                [routerLink]="['/' + (isLogin ? 'register' : 'login')]">{{(isLogin ? 'Registrati' : 'Vai al login')}}</span></p>
+
+        </form>
+    </div>
+
+    <ng-template #messageTemplate>
+        <div class="row text-center mat-body">
+            <p>{{message}}</p>
+            <p><a routerLink="/login" class="text-primary fw-bold">Vai al login</a></p>
+        </div>
+    </ng-template>
+</div>

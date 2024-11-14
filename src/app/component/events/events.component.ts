@@ -60,8 +60,6 @@ export class EventsComponent implements OnInit {
         event.time = this.eventMapper.formatTimeFromBe(event.time)
       });
 
-      console.log(this.events)
-
       this.populateDataSource();
       this.setFilterPredicate();
       this.setSort();
@@ -74,8 +72,6 @@ export class EventsComponent implements OnInit {
     this.events.forEach(event => {
       this.dataSource.data.push({...event});
     });
-
-    console.log(this.dataSource)
   }
 
   setFilterPredicate() {

@@ -1,5 +1,18 @@
 <ng-http-loader [backgroundColor]="'#0d6efd'" [opacity]="1" spinner="sk-three-bounce"></ng-http-loader>
 
+<div *ngIf="isLoggedIn$ | async" class="container pt-3">
+    <div class="row justify-content-center px-2">
+        <div class="col-4 text-center">
+            <a class="text-link" role="button" [routerLink]="['/profile']"><i class="fa-solid fa-user"></i></a>
+        </div>
+        <div class="col-4 text-center">
+            <a class="text-link" role="button" [routerLink]="['/']"><i class="fa-solid fa-house"></i></a>
+        </div>
+        <div class="col-4 text-center">
+            <a class="text-link" role="button" (click)="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        </div>
+    </div>
+</div>
 <div class="container pt-5">
     <router-outlet></router-outlet>
 </div>

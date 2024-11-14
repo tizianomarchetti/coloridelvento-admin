@@ -4,23 +4,39 @@ import { HomeComponent } from './component/home/home.component';
 import { EventsComponent } from './component/events/events.component';
 import { EventComponent } from './component/event/event.component';
 import { CanDeactivateGuard } from './guard/can-deactivate.guard';
+import { LoginComponent } from './component/login/login.component';
+import { LoginGuard } from './guard/login.guard';
+import { AuthGuard } from './guard/auth.guard';
+import { ProfileComponent } from './component/profile/profile.component';
 
 
 const routes: Routes = [
-  {
-    path: "home",
-    redirectTo: "",
-    pathMatch: "full"
-  },
   {
     /**
      * La radice della single page application è stabilita al componente HomeComponent
      */
     path: "",
     component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "login",
+    component: LoginComponent,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: "register",
+    component: LoginComponent,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: "profile",
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "events",
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: "",
