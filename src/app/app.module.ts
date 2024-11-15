@@ -15,6 +15,7 @@ import { ModaleComponent } from './component/modale/modale.component';
 import { LoginComponent } from './component/login/login.component';
 import { AuthInterceptor } from './interceptor/app.interceptor';
 import { ProfileComponent } from './component/profile/profile.component';
+import { AcceptComponent } from './component/accept/accept.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ProfileComponent } from './component/profile/profile.component';
     EventComponent,
     ModaleComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    AcceptComponent
   ],
   imports: [
     BrowserModule,

@@ -13,7 +13,8 @@ export class AuthService {
 
   private loginUrl = ROOT + "login";
   private registerUrl = ROOT + "register";
-  private isLoggedInUrl = ROOT + "security/isLoggedIn"; //TODO dà sempre 401 perché rigenera la secret key
+  private isLoggedInUrl = ROOT + "security/isLoggedIn";
+  private isAdminUrl = ROOT + "security/isAdmin";
 
   constructor(private http: HttpClient) { }
 
@@ -35,7 +36,7 @@ export class AuthService {
     return this.http.post(this.loginUrl, {
       email: email,
       password: password
-    }, { responseType: 'text' });
+    });
   }
 
   isLoggedIn(): Observable<boolean> {
@@ -45,7 +46,15 @@ export class AuthService {
     );
   }
 
+  isAdmin() {
+    return this.http.get(this.isAdminUrl);
+  }
+
   register(user: Utente) {
     return this.http.post(this.registerUrl, user);
+  }
+
+  getUserProfile() {
+    return JSON.parse(localStorage.getItem('user-data') || sessionStorage.getItem('user-data'));
   }
 }

@@ -7,4 +7,15 @@ import { Utente } from '../interface/user';
 export class UserMapperService {
 
   constructor() { }
+
+  mapUtente(item: any): Utente {
+    return {
+      id: item['ID'],
+      email: item['EMAIL'],
+      password: item['PASSWORD'],
+      active: item['ACTIVE'] == 1,
+      admin: item['ADMIN'] == 1,
+      token: item['TOKEN']
+    }
+  }
 }

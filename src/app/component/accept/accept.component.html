@@ -1,0 +1,36 @@
+<!-- <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center"> -->
+    <!-- <ng-container *ngIf="isAdmin; else denied"> -->
+    <ng-container *ngIf="!message; else messageTemplate">
+    
+        <div *ngIf="userToAccept" class="row">
+            <form  class="h-100 mat-body" [formGroup]="formData">    
+                <div class="col-12 mb-5">
+                    <p>
+                        <strong>{{userToAccept?.email}}</strong> ha richiesto di iscriversi, ma ha bisogno della tua <strong>conferma</strong> per accedere all'app. 
+                        Puoi scegliere se accettare l'iscrizione con o senza i privilegi da amministratore. Nel primo caso l'utente potrà gestire ed accettare le altre utenze.
+                        Se <strong>rifiuti</strong> l'iscrizione, l'utenza verrà eliminata e l'utente non avrà accesso a nessuna delle funzionalità.
+                    </p>
+                </div>
+
+                <mat-checkbox color="primary" id="admin" formControlName="admin">Accetta come amministratore</mat-checkbox>
+    
+                <button class="btn btn-primary w-100 my-4"
+                    (click)="handleRegistration(true)">Accetta iscrizione</button>
+    
+                <button class="btn btn-light text-primary border-primary w-100 mb-4"
+                    (click)="handleRegistration(false)">Rifuta iscrizione</button>
+            
+            </form>
+
+        </div>
+    
+    </ng-container>
+
+    <ng-template #messageTemplate>
+        <div class="row text-center mat-body">
+            <p>{{userToAccept?.email}} - {{message}}</p>
+            <p><a [routerLink]="['']" class="text-primary fw-bold">Vai alla home</a></p>
+        </div>
+    </ng-template>
+
+<!-- </div> -->
