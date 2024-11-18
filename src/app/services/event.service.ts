@@ -7,7 +7,7 @@ import { Evento } from '../interface/event';
   providedIn: 'root'
 })
 export class EventService {
-  eventsUrl: string = ROOT + 'events';
+  eventsUrl: string = ROOT + 'event/getAll';
   eventUrl: string = ROOT + 'event/getById';
   updateEventUrl: string = ROOT + 'event/update';
   createEventUrl: string = ROOT + 'event/create';
@@ -27,7 +27,7 @@ export class EventService {
     return this.http.put(this.updateEventUrl, {
       ...event,
       id: id
-    }, { responseType: 'text' });
+    });
   }
 
   create(event: Evento) {

@@ -1,1 +1,106 @@
-<p>profile works!</p>
+<div class="row">
+
+    <form *ngIf="formData" class="h-100" [formGroup]="formData">
+
+        <h2 id="title" class="mb-5">{{editing ? 'Modifica password' : 'Profilo'}}</h2>
+
+        <div *ngIf="formError" class="mb-5">
+            <p class="text-danger fw-bold">{{formError}}</p>
+        </div>
+
+        <ng-container *ngIf="editing; else disabled">
+            <mat-form-field class="form-field w-100 my-1 ms-1">
+                <mat-label>Password*</mat-label>
+                <input matInput type="password" id="oldPassword" formControlName="oldPassword">
+
+                <mat-error *ngIf="formData.get('oldPassword').invalid && formData.get('oldPassword').touched && formData.get('oldPassword').dirty">
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('oldPassword').errors?.required">
+                        Campo obbligatorio.
+                    </small> 
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('oldPassword').errors?.minlength">
+                        Lunghezza minima {{formData.get('oldPassword').errors.minlength.requiredLength}} caratteri.
+                    </small>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field w-100 my-1 ms-1">
+                <mat-label>Nuova password*</mat-label>
+                <input matInput type="password" id="newPassword" formControlName="newPassword">
+
+                <mat-error *ngIf="formData.get('newPassword').invalid && formData.get('newPassword').touched && formData.get('newPassword').dirty">
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('newPassword').errors?.required">
+                        Campo obbligatorio.
+                    </small> 
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('newPassword').errors?.minlength">
+                        Lunghezza minima {{formData.get('newPassword').errors.minlength.requiredLength}} caratteri.
+                    </small>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field w-100 my-1 ms-1">
+                <mat-label>Conferma password*</mat-label>
+                <input matInput type="password" id="confirmPassword" formControlName="confirmPassword">
+
+                <mat-error *ngIf="formData.get('confirmPassword').invalid && formData.get('confirmPassword').touched && formData.get('confirmPassword').dirty">
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('confirmPassword').errors?.required">
+                        Campo obbligatorio.
+                    </small> 
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('confirmPassword').errors?.minlength">
+                        Lunghezza minima {{formData.get('confirmPassword').errors.minlength.requiredLength}} caratteri.
+                    </small>
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('confirmPassword').errors?.mismatchedPasswords">
+                        Le password devono coincidere.
+                    </small>
+                </mat-error>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-template #disabled>
+
+            <div *ngIf="dataSource" class="overflow-auto mb-5">
+                <table mat-table [dataSource]="dataSource" matSort class="w-100 bg-transparent">
+    
+                    <ng-container *ngFor="let col of displayedColumns">
+                        <ng-container [matColumnDef]="col">
+                            <td mat-cell *matCellDef="let element" class="px-3" [class.fw-bold]="col == 'valore'">
+                                <span>{{element[col] ? formatField(element, col) : '-'}}</span>
+                            </td>
+                        </ng-container>
+                    </ng-container>
+                
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                </table>
+            </div>
+
+        </ng-template>
+
+    </form>
+
+</div>
+
+<div>
+    <ng-container *ngIf="!editing; else editingCta">
+        <div class="row p-2">
+            <button class="btn btn-primary" (click)="editing = true">Modifica password</button>
+        </div>
+    </ng-container>
+    
+    <ng-template #editingCta>
+        <button class="btn btn-primary me-2" (click)="confirm()" [disabled]="!formData.valid">
+            Conferma
+        </button>
+
+        <button class="btn btn-light text-primary border-primary" (click)="cancel()">
+            Annulla
+        </button>
+    </ng-template>
+    
+</div>

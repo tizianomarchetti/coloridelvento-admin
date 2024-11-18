@@ -228,7 +228,7 @@ export class EventComponent implements OnInit, IFormComponent {
     this.eventService.edit(event, this.id).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
-          body: res,
+          body: res.message,
           showPositiveCta: false
         },
         autoFocus: false,
@@ -241,7 +241,7 @@ export class EventComponent implements OnInit, IFormComponent {
       })
     }, (error) => {
       console.error(error);
-      this.formError = error.message;
+      this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
       document.getElementById('title').scrollIntoView();
     })
