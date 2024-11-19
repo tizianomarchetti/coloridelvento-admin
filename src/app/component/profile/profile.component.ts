@@ -1,8 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatTableDataSource } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
-import { RegisterForm } from 'src/app/form/register.form';
 import { Utente } from 'src/app/interface/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserMapperService } from 'src/app/services/user-mapper.service';

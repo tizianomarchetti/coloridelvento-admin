@@ -16,6 +16,10 @@ import { LoginComponent } from './component/login/login.component';
 import { AuthInterceptor } from './interceptor/app.interceptor';
 import { ProfileComponent } from './component/profile/profile.component';
 import { AcceptComponent } from './component/accept/accept.component';
+import { BandComponent } from './component/band/band.component';
+import { ComponentComponent } from './component/component/component.component';
+import { ComponentsComponent } from './component/components/components.component';
+import { QuillModule, QuillService } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,10 @@ import { AcceptComponent } from './component/accept/accept.component';
     ModaleComponent,
     LoginComponent,
     ProfileComponent,
-    AcceptComponent
+    AcceptComponent,
+    BandComponent,
+    ComponentComponent,
+    ComponentsComponent
   ],
   imports: [
     BrowserModule,
@@ -43,10 +50,21 @@ import { AcceptComponent } from './component/accept/accept.component';
     MatCheckboxModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    NgHttpLoaderModule.forRoot()
+    NgHttpLoaderModule.forRoot(),
+    QuillModule.forRoot({
+      theme: 'snow', // Set default theme
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline'], // Formatting options
+          [{ list: 'ordered' }, { list: 'bullet' }], // Lists
+          ['link'], // Media links
+        ],
+      },
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    QuillService
   ],
   bootstrap: [AppComponent],
   entryComponents: [ModaleComponent]

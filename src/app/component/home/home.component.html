@@ -6,9 +6,15 @@
         <a [routerLink]="['/events']" >Eventi</a>
     </p>
     <p>
-        <a [routerLink]="['/band']" >Band e componenti</a>
+        <a class="text-link" (click)="bandExploded = !bandExploded" >Band e componenti</a>
     </p>
+    <div *ngIf="bandExploded">
+        <ul>
+            <li><a [routerLink]="['/band']" >Band</a></li>
+            <li><a [routerLink]="['/component']" >Componenti</a></li>
+        </ul>
+    </div>
     <p>
-        <a [routerLink]="['/events']" >Video</a>
+        <a [routerLink]="['/video']" >Video</a>
     </p>
 </div>

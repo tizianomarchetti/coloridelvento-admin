@@ -10,6 +10,9 @@ import { AuthGuard } from './guard/auth.guard';
 import { ProfileComponent } from './component/profile/profile.component';
 import { AcceptComponent } from './component/accept/accept.component';
 import { AdminGuard } from './guard/admin.guard';
+import { BandComponent } from './component/band/band.component';
+import { ComponentComponent } from './component/component/component.component';
+import { ComponentsComponent } from './component/components/components.component';
 
 
 const routes: Routes = [
@@ -39,7 +42,8 @@ const routes: Routes = [
   {
     path: "profile",
     component: ProfileComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuard]
   },
   {
     path: "events",
@@ -61,6 +65,37 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: "band",
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: BandComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: "component",
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: ComponentsComponent
+      },
+      {
+        path: "insert",
+        component: ComponentComponent,
+        canDeactivate: [CanDeactivateGuard]
+      },
+      {
+        path: ":id",
+        component: ComponentComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  }
 ];
 
 @NgModule({

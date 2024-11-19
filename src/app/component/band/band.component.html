@@ -1,0 +1,46 @@
+<div class="row mb-4">
+    <a [routerLink]="['/']" ><i class="fa-solid fa-angles-left"></i> Torna indietro</a>
+</div>
+
+<div class="row">
+    <div *ngIf="formError" class="mb-5">
+        <p class="text-danger fw-bold">{{formError}}</p>
+    </div>
+
+    <div *ngIf="!editing" class="col-12 my-4">
+        <h6 class="text-center mb-3">Scegli la lingua da modificare</h6>
+        <div class="row d-flex justify-content-center">
+            <div class="col-6 text-end">
+                <img src="https://coloridelvento.altervista.org/assets/images/it.webp" alt="it" id="it" class="rounded-pill" width="40" (click)="setLang('it')">
+            </div>
+            <div class="col-6">
+                <img src="https://coloridelvento.altervista.org/assets/images/en.webp" alt="en" id="en" class="rounded-pill" width="40" (click)="setLang('en')">
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="lang">
+        <quill-editor class="mb-5" *ngIf="editing" [(ngModel)]="editorContent"></quill-editor>
+        <h4 class="my-4" *ngIf="editing">Anteprima</h4>
+        <div class="mb-2" [innerHTML]="editorContent"></div>
+    </ng-container>
+</div>
+
+<div *ngIf="lang" class="mb-5">
+    <ng-container *ngIf="!editing; else editingCta">
+        <div class="row p-2">
+            <button class="btn btn-primary" (click)="editing = true">Modifica</button>
+        </div>
+    </ng-container>
+    
+    <ng-template #editingCta>
+        <button class="btn btn-primary me-2" (click)="confirm()">
+            Conferma
+        </button>
+
+        <button class="btn btn-light text-primary border-primary" (click)="cancel()">
+            Annulla
+        </button>
+    </ng-template>
+    
+</div>
