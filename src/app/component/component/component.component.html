@@ -1,1 +1,119 @@
-<p>component works!</p>
+<div class="row mb-4">
+    <a [routerLink]="['/component']" ><i class="fa-solid fa-angles-left"></i> Torna alla lista</a>
+</div>
+
+<div class="row">
+    <h2 id="title" class="mb-5">{{(isInsert ? 'Inserisci' : 'Modifica') + ' componente'}}</h2>
+
+    <div *ngIf="!editing || (isInsert && !lang)" class="col-12 mb-4">
+        <ng-container *ngIf="!isInsert && !lang && component">
+            <div class="col-12 mb-5">
+                <h4 class="text-center">{{component.name}}</h4>
+            </div>
+        </ng-container>
+
+        <h6 class="text-center mb-3">Scegli la lingua {{isInsert ? '' : 'da modificare'}}</h6>
+        <div class="row d-flex justify-content-center">
+            <div class="col-6 text-end">
+                <img src="https://coloridelvento.altervista.org/assets/images/it.webp" alt="it" id="it" class="rounded-pill" width="40" (click)="setLang('it')">
+            </div>
+            <div class="col-6">
+                <img src="https://coloridelvento.altervista.org/assets/images/en.webp" alt="en" id="en" class="rounded-pill" width="40" (click)="setLang('en')">
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="formData && lang" class="h-100">
+
+        <div *ngIf="formError" class="mb-5">
+            <p class="text-danger fw-bold">{{formError}}</p>
+        </div>
+
+        <ng-container *ngIf="isInsert || editing; else disabled">
+            <form *ngIf="formData" class="h-100" [formGroup]="formData">
+                <mat-form-field class="form-field w-100 my-1 ms-1">
+                    <mat-label>Nome completo*</mat-label>
+                    <input matInput type="text" id="name" formControlName="name">
+
+                    <mat-error *ngIf="formData.get('name').invalid && formData.get('name').touched">
+                        <small class="text-danger"
+                            *ngIf="formData.get('name').errors?.required">
+                            Campo obbligatorio.
+                        </small>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-field w-100 mt-1 mb-3 ms-1">
+                    <mat-label>Foto (estensione .webp)*</mat-label>
+                    <input type="file" id="file" name="file" (change)="onFileChange($event)" hidden>
+                    <input matInput type="text" id="img" formControlName="img" (click)="clickFileInput()" readonly>
+
+                    <mat-error *ngIf="formData.get('img').invalid && formData.get('img').touched">
+                        <small class="text-danger" *ngIf="formData.get('img').errors?.required">
+                            Campo obbligatorio.
+                        </small>
+
+                        <small class="text-danger" *ngIf="formData.get('img').errors?.format">
+                            Formato immagine non valido.
+                        </small>
+                    </mat-error>
+                </mat-form-field>
+
+            </form>
+
+            <mat-label><small class="text-secondary">Biografia*</small></mat-label>
+            <quill-editor class="mb-5" [(ngModel)]="editorContent"></quill-editor>
+            <small *ngIf="(!editorContent || editorContent == '') && editorContent != originalContent" class="text-danger">Campo obbligatorio</small>
+            <h4 class="my-4" *ngIf="editing || isInsert">Anteprima</h4>
+            <div class="mb-2" [innerHTML]="editorContent"></div>
+        </ng-container>
+
+        <ng-template #disabled>
+
+            <hr>
+            <div class="col-12 mb-3">
+                <h4 class="text-center">{{component.name}}</h4>
+            </div>
+            <div class="col-12 mb-3 text-center">
+                <img [src]="'https://coloridelvento.altervista.org/assets/images/' + component.img" [alt]="component.name" width="100">
+            </div>
+            <div class="col-12 mb-5" [innerHTML]="editorContent"></div>
+
+        </ng-template>
+
+    </div>
+
+</div>
+
+<div class="mb-5" *ngIf="formData && lang">
+    <ng-container *ngIf="!isInsert; else saveCta">
+        <ng-container *ngIf="!editing; else editingCta">
+            <div class="row p-2">
+                <button class="btn btn-primary" (click)="editing = true">Modifica</button>
+            </div>
+            
+            <div class="row px-2">
+                <button class="btn btn-light text-danger border-danger" (click)="delete()">Elimina</button>
+            </div>
+        </ng-container>
+        
+        <ng-template #editingCta>
+            <button class="btn btn-primary me-2" (click)="confirm()" [disabled]="!formData.valid || !editorContent || editorContent == ''">
+                Conferma
+            </button>
+    
+            <button class="btn btn-light text-primary border-primary" (click)="cancel()">
+                Annulla
+            </button>
+        </ng-template>
+    </ng-container>
+
+    <ng-template #saveCta>
+        <div class="col-12 col-lg">
+            <button class="btn btn-primary me-2" (click)="confirm()" [disabled]="!formData.valid">
+                Salva
+            </button>
+        </div>
+    </ng-template>
+    
+</div>

@@ -17,7 +17,7 @@
                 <mat-label>Luogo*</mat-label>
                 <input matInput type="text" id="location" formControlName="location">
 
-                <mat-error *ngIf="formData.get('location').invalid && formData.get('location').touched && formData.get('location').dirty">
+                <mat-error *ngIf="formData.get('location').invalid && formData.get('location').touched">
                     <small class="text-danger"
                         *ngIf="formData.get('location').errors?.required">
                         Campo obbligatorio.
@@ -29,7 +29,7 @@
                 <mat-label>Data*</mat-label>
                 <input matInput type="date" id="date" formControlName="date">
 
-                <mat-error *ngIf="formData.get('date').invalid && formData.get('date').touched && formData.get('date').dirty">
+                <mat-error *ngIf="formData.get('date').invalid && formData.get('date').touched">
                     <small class="text-danger"
                         *ngIf="formData.get('date').errors?.required">
                         Campo obbligatorio.
@@ -41,7 +41,7 @@
                 <mat-label>Ora*</mat-label>
                 <input matInput type="time" id="time" formControlName="time">
 
-                <mat-error *ngIf="formData.get('time').invalid && formData.get('time').touched && formData.get('time').dirty">
+                <mat-error *ngIf="formData.get('time').invalid && formData.get('time').touched">
                     <small class="text-danger"
                         *ngIf="formData.get('time').errors?.required">
                         Campo obbligatorio.

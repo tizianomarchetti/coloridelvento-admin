@@ -162,7 +162,7 @@ export class EventsComponent implements OnInit {
     this.eventService.bulkDelete(ids).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
-          body: res,
+          body: res.message,
           showPositiveCta: false
         },
         autoFocus: false,
@@ -174,7 +174,7 @@ export class EventsComponent implements OnInit {
       })
     }, error => {
       console.error(error)
-      this.formError = error.message;
+      this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
       document.getElementById('title').scrollIntoView();
     })

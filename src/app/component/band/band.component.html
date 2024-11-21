@@ -21,6 +21,7 @@
 
     <ng-container *ngIf="lang">
         <quill-editor class="mb-5" *ngIf="editing" [(ngModel)]="editorContent"></quill-editor>
+        <small *ngIf="editing && (!editorContent || editorContent == '')" class="text-danger">Campo obbligatorio</small>
         <h4 class="my-4" *ngIf="editing">Anteprima</h4>
         <div class="mb-2" [innerHTML]="editorContent"></div>
     </ng-container>
@@ -34,7 +35,7 @@
     </ng-container>
     
     <ng-template #editingCta>
-        <button class="btn btn-primary me-2" (click)="confirm()">
+        <button class="btn btn-primary me-2" (click)="confirm()" [disabled]="!editorContent || editorContent == ''">
             Conferma
         </button>
 

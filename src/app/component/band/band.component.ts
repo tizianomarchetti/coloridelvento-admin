@@ -66,7 +66,7 @@ export class BandComponent implements OnInit {
   }
 
   confirm() {
-    if (this.editorContent != '') {
+    if (this.editorContent && this.editorContent != '') {
       this.formError = null;
       if (this.isFormModified()) {
         this.dialog.open(ModaleComponent, {

@@ -35,6 +35,6 @@ export class EventService {
   }
 
   bulkDelete(ids: number[]) {
-    return this.http.put(this.bulkDeleteUrl, { ids: ids }, { responseType: 'text'});
+    return this.http.put(this.bulkDeleteUrl, { ids: ids });
   }
 }
