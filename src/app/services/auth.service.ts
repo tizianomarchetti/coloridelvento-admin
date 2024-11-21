@@ -13,6 +13,7 @@ export class AuthService {
 
   private loginUrl = ROOT + "login";
   private registerUrl = ROOT + "register";
+  private resetPasswordUrl = ROOT + "resetPassword";
   private isLoggedInUrl = ROOT + "security/isLoggedIn";
   private isAdminUrl = ROOT + "security/isAdmin";
 
@@ -52,6 +53,10 @@ export class AuthService {
 
   register(user: Utente) {
     return this.http.post(this.registerUrl, user);
+  }
+
+  resetPassword(user: Utente) {
+    return this.http.post(this.resetPasswordUrl, user);
   }
 
   getUserProfile() {

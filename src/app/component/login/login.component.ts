@@ -88,4 +88,48 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  showModalResetPassword() {
+    if (this.formData.get('email').invalid) {
+      this.dialog.open(ModaleComponent, {
+        data: {
+          body: "Compilare correttamente il campo email prima di procedere al recupero della password",
+          showPositiveCta: false
+        },
+        autoFocus: false,
+        restoreFocus: false,
+        disableClose: true
+      }); 
+    }
+    else {
+      this.dialog.open(ModaleComponent, {
+        data: {
+          body: "Procedere al reset della password? La nuova password ti verrà inviata all'indirizzo mail indicato nel campo di login.",
+          onConfirm: () => {
+            this.authService.resetPassword(this.formData.value).subscribe((res: any) => {
+              this.passwordRestored(res.message);
+            }, error => {
+              console.error(error)
+              this.message = error.error.message
+            });
+          }
+        },
+        autoFocus: false,
+        restoreFocus: false,
+        disableClose: true
+      });   
+    }  
+  }
+
+  passwordRestored(message: string) {
+    this.dialog.open(ModaleComponent, {
+      data: {
+        body: message,
+        showPositiveCta: false
+      },
+      autoFocus: false,
+      restoreFocus: false,
+      disableClose: true
+    }); 
+  }
+
 }

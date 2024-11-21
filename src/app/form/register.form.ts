@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { Utente } from "../interface/user";
 
 export class RegisterForm {
@@ -20,7 +20,11 @@ export class RegisterForm {
         this.form = this.formBuilder.group({
             email: [
                 this.user.email,
-                [Validators.required, Validators.email]
+                [Validators.required, Validators.email, (control: AbstractControl): ValidationErrors | null => {
+                    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Requires a TLD
+                    const valid = emailRegex.test(control.value);
+                    return valid ? null : { email: true };
+                  }]
             ],
             password: [
                 this.user.password,

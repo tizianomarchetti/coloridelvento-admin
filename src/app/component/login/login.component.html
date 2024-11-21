@@ -23,7 +23,7 @@
             </mat-form-field>
 
             <!-- password -->
-            <mat-form-field class="form-field w-100 my-2">
+            <mat-form-field class="form-field w-100 mt-2">
                 <input matInput type="password" id="password" placeholder="Password*" formControlName="password">
             
                 <mat-error *ngIf="formData.get('password').invalid && formData.get('password').touched && formData.get('password').dirty">
@@ -37,6 +37,9 @@
                     </small>
                 </mat-error>
             </mat-form-field>
+            <div class="mb-4">
+                <small><a role="button" class="text-primary" (click)="showModalResetPassword()">Password dimenticata?</a></small>
+            </div>
 
             <mat-checkbox *ngIf="isLogin"
                 color="primary"

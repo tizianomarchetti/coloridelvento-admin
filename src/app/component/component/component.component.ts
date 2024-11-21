@@ -168,7 +168,7 @@ export class ComponentComponent implements OnInit {
 
   create() {
     const component: BandComponent = this.formData.value;
-    component.bio = component.name.toLowerCase().split(' ').join('_'); //TODO se riesci trova un modo di creare un codice univoco, DELETE da fare lato be (cancellare fisicamente immagine e voce di dizionario)
+    component.bio = component.name.toLowerCase().split(' ').join('_'); //TODO se riesci trova un modo di creare un codice univoco
     this.dictionary.section.about.bio[component.bio] = this.editorContent;
     this.bandService.createComponent(component, this.image, this.dictionary, this.lang).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
