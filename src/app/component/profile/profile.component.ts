@@ -101,7 +101,7 @@ export class ProfileComponent implements OnInit {
     } else {
       this.formError = 'Compilare correttamente tutti i campi obbligatori.';
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     }
   }
 
@@ -164,13 +164,13 @@ export class ProfileComponent implements OnInit {
         console.error(error);
         this.formError = error.error.message || error.message;
         this.cdr.detectChanges();
-        document.getElementById('title').scrollIntoView();
+        window.scrollTo(0, 0);
       })
     }, (error) => {
       console.error(error);
       this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     });
   }
 

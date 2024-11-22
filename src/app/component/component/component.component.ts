@@ -8,13 +8,14 @@ import { BandService } from 'src/app/services/band.service';
 import { ModaleComponent } from '../modale/modale.component';
 import { ComponentForm } from 'src/app/form/component.form';
 import { DictionaryService } from 'src/app/services/dictionary.service';
+import { IFormComponent } from 'src/app/interface/i-form-component';
 
 @Component({
   selector: 'app-component',
   templateUrl: './component.component.html',
   styleUrls: ['./component.component.css']
 })
-export class ComponentComponent implements OnInit {
+export class ComponentComponent implements OnInit, IFormComponent {
   id: number;
   component: BandComponent;
 
@@ -114,7 +115,7 @@ export class ComponentComponent implements OnInit {
     } else {
       this.formError = 'Compilare correttamente tutti i campi obbligatori.';
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     }
   }
 
@@ -188,7 +189,7 @@ export class ComponentComponent implements OnInit {
       console.error(error);
       this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     })
   }
 
@@ -212,7 +213,7 @@ export class ComponentComponent implements OnInit {
       console.error(error);
       this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     })
   }
 
@@ -248,7 +249,7 @@ export class ComponentComponent implements OnInit {
       console.error(error)
       this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     })
   }
 

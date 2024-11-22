@@ -84,7 +84,7 @@ export class BandComponent implements OnInit {
     } else {
       this.formError = 'Compilare correttamente tutti i campi obbligatori.';
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     }
   }
 
@@ -107,7 +107,7 @@ export class BandComponent implements OnInit {
       console.error(error);
       this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     })
   }
 

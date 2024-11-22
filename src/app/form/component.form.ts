@@ -34,4 +34,6 @@ export class ComponentForm {
 
     get img() { return this.form.get('img') }
 
+    get bio() { return this.form.get('bio') }
+
 }

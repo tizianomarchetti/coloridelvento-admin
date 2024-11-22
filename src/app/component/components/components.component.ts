@@ -125,7 +125,7 @@ export class ComponentsComponent implements OnInit {
   }
 
   selectAll(event: MatCheckboxChange) {
-    (this.dataSource.filteredData || this.dataSource.data).filter(el => !el.admin).forEach(el => {
+    (this.dataSource.filteredData || this.dataSource.data).forEach(el => {
       el.checked = event.checked;
     });
   }
@@ -167,7 +167,7 @@ export class ComponentsComponent implements OnInit {
       console.error(error)
       this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     })
   }
 

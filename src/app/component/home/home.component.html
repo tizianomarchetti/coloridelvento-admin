@@ -15,6 +15,12 @@
         </ul>
     </div>
     <p>
-        <a [routerLink]="['/video']" >Video</a>
+        <a class="text-link" (click)="mediaExploded = !mediaExploded" >Media</a>
     </p>
+    <div *ngIf="mediaExploded">
+        <ul>
+            <li><a [routerLink]="['/photo']" >Foto</a></li>
+            <li><a [routerLink]="['/video']" >Video</a></li>
+        </ul>
+    </div>
 </div>

@@ -29,7 +29,7 @@ export class EventsComponent implements OnInit {
     private eventMapper: EventMapperService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.displayedColumns = ['location', 'date', 'time'];
+    this.displayedColumns = ['checked', 'location', 'date', 'time'];
     this.columnLabels = [
       {
         id: 'location',
@@ -176,7 +176,7 @@ export class EventsComponent implements OnInit {
       console.error(error)
       this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     })
   }
 

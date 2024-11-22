@@ -152,7 +152,7 @@ export class EventComponent implements OnInit, IFormComponent {
     } else {
       this.formError = 'Compilare correttamente tutti i campi obbligatori.';
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     }
   }
 
@@ -220,7 +220,7 @@ export class EventComponent implements OnInit, IFormComponent {
       console.error(error);
       this.formError = error.message;
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     })
   }
 
@@ -243,7 +243,7 @@ export class EventComponent implements OnInit, IFormComponent {
       console.error(error);
       this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     })
   }
 
@@ -279,7 +279,7 @@ export class EventComponent implements OnInit, IFormComponent {
       console.error(error)
       this.formError = error.error.message || error.message;
       this.cdr.detectChanges();
-      document.getElementById('title').scrollIntoView();
+      window.scrollTo(0, 0);
     })
   }
 

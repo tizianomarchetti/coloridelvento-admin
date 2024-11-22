@@ -20,6 +20,10 @@ import { BandComponent } from './component/band/band.component';
 import { ComponentComponent } from './component/component/component.component';
 import { ComponentsComponent } from './component/components/components.component';
 import { QuillModule, QuillService } from 'ngx-quill';
+import { PhotosComponent } from './component/photos/photos.component';
+import { VideosComponent } from './component/videos/videos.component';
+import { PhotoComponent } from './component/photo/photo.component';
+import { VideoComponent } from './component/video/video.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { QuillModule, QuillService } from 'ngx-quill';
     AcceptComponent,
     BandComponent,
     ComponentComponent,
-    ComponentsComponent
+    ComponentsComponent,
+    PhotosComponent,
+    VideosComponent,
+    PhotoComponent,
+    VideoComponent
   ],
   imports: [
     BrowserModule,

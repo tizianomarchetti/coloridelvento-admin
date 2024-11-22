@@ -13,6 +13,10 @@ import { AdminGuard } from './guard/admin.guard';
 import { BandComponent } from './component/band/band.component';
 import { ComponentComponent } from './component/component/component.component';
 import { ComponentsComponent } from './component/components/components.component';
+import { PhotosComponent } from './component/photos/photos.component';
+import { PhotoComponent } from './component/photo/photo.component';
+import { VideosComponent } from './component/videos/videos.component';
+import { VideoComponent } from './component/video/video.component';
 
 
 const routes: Routes = [
@@ -92,6 +96,41 @@ const routes: Routes = [
       {
         path: ":id",
         component: ComponentComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: "photo",
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: PhotosComponent
+      },
+      {
+        path: "insert",
+        component: PhotoComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: "video",
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: VideosComponent
+      },
+      {
+        path: "insert",
+        component: VideoComponent,
+        canDeactivate: [CanDeactivateGuard]
+      },
+      {
+        path: ":id",
+        component: VideoComponent,
         canDeactivate: [CanDeactivateGuard]
       }
     ]

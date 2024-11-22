@@ -39,7 +39,7 @@
             </ng-container>
 
             <ng-container matColumnDef="noData">
-                <td mat-footer-cell *matFooterCellDef colspan="4" class="text-center border-0">Nessun componente trovato</td>
+                <td mat-footer-cell *matFooterCellDef colspan="3" class="text-center border-0">Nessun componente trovato</td>
              </ng-container>
         
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -58,6 +58,6 @@
     <button class="btn btn-light text-danger border-danger" (click)="delete()">Elimina</button>
 </div>
 
-<div class="row px-2">
+<div class="row px-2 mb-5">
     <a class="btn btn-primary" [routerLink]="['insert']">Aggiungi componente</a>
 </div>
