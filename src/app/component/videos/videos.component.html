@@ -1,1 +1,81 @@
-<p>videos works!</p>
+<div class="row mb-4">
+    <a [routerLink]="['/']" ><i class="fa-solid fa-angles-left"></i> Torna indietro</a>
+</div>
+
+<div class="row">
+    <div *ngIf="formError" class="mb-5">
+        <p class="text-danger fw-bold">{{formError}}</p>
+    </div>
+
+    <div class="p-2">
+        <div class="p-2 d-flex border border-warning">
+            <div class="me-3">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div>
+                <span>Carica 1 solo video con il flag cover spuntato per mantenere l'impaginazione del layout della home page</span>
+            </div>
+        </div>
+    </div>
+
+    <mat-form-field *ngIf="dataSource?.data.length > 0" class="w-100">
+        <mat-label>Filtro</mat-label>
+        <input id="filterInput" matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+    
+    <div class="overflow-auto">
+        <table mat-table [dataSource]="dataSource" matSort class="w-100 bg-transparent">
+
+            <ng-container matColumnDef="checked">
+                <th mat-header-cell *matHeaderCellDef class="px-3">
+                    <mat-checkbox *ngIf="checkableLength > 0 && dataSource?.filteredData?.length > 0" color="primary" 
+                        [checked]="checkableLength == getCheckedLength() || dataSource.filteredData?.length == getCheckedLength()"
+                        [indeterminate]="getCheckedLength() > 0 && checkableLength != getCheckedLength()"
+                        (change)="selectAll($event)">
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let element" class="px-3">
+                    <mat-checkbox [id]="element.id" [(ngModel)]="element.checked" color="primary">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <!-- titolo -->
+            <ng-container matColumnDef="title">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef class="px-3 fw-bold"> {{getColumnLabel('title')}} </th>
+                <td mat-cell *matCellDef="let element" class="p-3" (click)="navigateTo(element)" role="button">
+                    <span>{{element['title']}}</span>
+                </td>
+            </ng-container>
+
+            <!-- flag cover -->
+            <ng-container matColumnDef="cover">
+                <th mat-header-cell *matHeaderCellDef class="px-3 fw-bold"> {{getColumnLabel('cover')}} </th>
+                <td mat-cell *matCellDef="let element" class="p-3" (click)="navigateTo(element)">
+                    <mat-checkbox [(ngModel)]="element.cover" color="primary" disabled></mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="noData">
+                <td mat-footer-cell *matFooterCellDef colspan="3" class="text-center border-0">Nessun video trovato</td>
+             </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="['noData']" [class.d-none]="dataSource?.data.length > 0 && dataSource?.filteredData.length > 0"></tr>
+        
+        </table>
+    </div>
+
+    <mat-paginator class="bg-transparent mt-4" [class.d-none]="dataSource?.data.length == 0 || dataSource?.filteredData.length == 0"
+        [length]="dataSource?.data.length" [pageSize]="5" showFirstLastButtons hidePageSize>
+    </mat-paginator>
+</div>
+
+<div class="row p-2" *ngIf="getCheckedLength() > 0">
+    <button class="btn btn-light text-danger border-danger" (click)="delete()">Elimina</button>
+</div>
+
+<div class="row px-2 mb-5">
+    <a class="btn btn-primary" [routerLink]="['insert']">Aggiungi video</a>
+</div>

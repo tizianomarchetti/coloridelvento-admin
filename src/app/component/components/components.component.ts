@@ -29,7 +29,7 @@ export class ComponentsComponent implements OnInit {
     private bandMapper: BandMapperService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.displayedColumns = ['name', 'img'];
+    this.displayedColumns = ['checked', 'name', 'img'];
     this.columnLabels = [
       {
         id: 'name',

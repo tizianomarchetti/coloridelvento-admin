@@ -44,10 +44,6 @@ export class EventComponent implements OnInit, IFormComponent {
   ngOnInit() {
     this.columnLabels = [
       {
-        id: 'id',
-        label: 'ID'
-      },
-      {
         id: 'location',
         label: 'Luogo'
       },
