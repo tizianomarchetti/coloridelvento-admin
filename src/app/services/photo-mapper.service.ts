@@ -12,7 +12,7 @@ export class PhotoMapperService {
     return {
       id: item['ID'],
       title: item['TITOLO'],
-      cover: item['FLAG_COPERTINA'] == 1 ? true : false
+      cover: item['FLAG_COPERTINA'] == 1
     }
   }
 }

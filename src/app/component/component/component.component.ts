@@ -243,7 +243,7 @@ export class ComponentComponent implements OnInit, IFormComponent {
         restoreFocus: false,
         disableClose: true
       }).afterClosed().subscribe(() => {
-        this.router.navigate(['/component'])
+        this.router.navigate(['/components'])
       })
     }, error => {
       console.error(error)

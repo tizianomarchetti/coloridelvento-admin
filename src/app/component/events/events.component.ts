@@ -144,6 +144,7 @@ export class EventsComponent implements OnInit {
   }
 
   delete() {
+    this.formError = null;
     const ids: number[] = (this.dataSource.filteredData || this.dataSource.data).filter(el => el.checked).map(el => el.id);
     this.dialog.open(ModaleComponent, {
       data: {

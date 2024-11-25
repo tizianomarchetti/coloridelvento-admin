@@ -2,60 +2,66 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Video } from 'src/app/interface/video';
-import { VideoMapperService } from 'src/app/services/video-mapper.service';
-import { VideoService } from 'src/app/services/video.service';
+import { Contatto } from 'src/app/interface/contact';
+import { ContactMapperService } from 'src/app/services/contact-mapper.service';
+import { ContactService } from 'src/app/services/contact.service';
 import { ModaleComponent } from '../modale/modale.component';
-import { VideoForm } from 'src/app/form/video.form';
+import { ContactForm } from 'src/app/form/contact.form';
 
 @Component({
-  selector: 'app-video',
-  templateUrl: './video.component.html',
-  styleUrls: ['./video.component.css']
+  selector: 'app-contact',
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.css']
 })
-export class VideoComponent implements OnInit {
+export class ContactComponent implements OnInit {
   id: number;
-  video: Video;
+  contact: Contatto;
+
+  footer: boolean;
 
   columnLabels: any[] = [];
 
-  image: any;
-
   isInsert: boolean;
 
-  form: VideoForm;
+  form: ContactForm;
   formData: FormGroup;
+
+  options: any[] = [];
+
+  formError: string = null;
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ['criterio', 'valore'];
 
-  formError: string = null;
-
   editing: boolean = false;
   insertCompleted: boolean = false;
 
-  constructor(private dialog: MatDialog, private route: ActivatedRoute, private videoService: VideoService, 
-    private videoMapper: VideoMapperService, private cdr: ChangeDetectorRef, private router: Router) { }
+  constructor(private dialog: MatDialog, private route: ActivatedRoute, private contactService: ContactService, 
+    private contactMapper: ContactMapperService, private cdr: ChangeDetectorRef, private router: Router) { 
+    this.footer = router.url.includes('footer');
+  }
 
   ngOnInit() {
     this.columnLabels = [
       {
-        id: 'title',
-        label: 'Titolo'
+        id: 'name',
+        label: 'Nome'
       },
       {
-        id: 'url',
-        label: 'URL'
+        id: 'desc',
+        label: 'Descrizione'
       },
       {
-        id: 'thumbnail',
-        label: 'Miniatura'
-      },
-      {
-        id: 'cover',
-        label: 'Flag cover'
+        id: 'type',
+        label: 'Tipologia'
       }
     ];
+
+    this.options = [
+      { url: 'tel:', icon: 'fas fa-phone', color: this.footer ? null : 'dark'},
+      { url: 'mailto:', icon: this.footer ? 'fas fa-envelope' :'fa-regular fa-envelope', color: this.footer ? null : 'danger'},
+      { url: 'https://wa.me/', icon: 'fa-brands fa-whatsapp', color: this.footer ? null : 'success'},
+    ]
     
     this.route.params.subscribe(params => {
       this.id = params.id;
@@ -64,67 +70,53 @@ export class VideoComponent implements OnInit {
       if (this.isInsert) {
         this.initForm();
       } else {
-        this.getVideo();
+        this.getContact();
       }
     });
   }
 
   initForm() {
-    this.form = new VideoForm(this);
+    this.form = new ContactForm(this);
     this.formData = this.form.form;
   }
 
-  getVideo() {
+  getContact() {
     this.dataSource = new MatTableDataSource();
-    this.videoService.getVideo(this.id).subscribe((video: any) => {
-      this.video = this.videoMapper.mapVideo(video);
+    this.contactService.getContact(this.id).subscribe((contact: any) => {
+      this.contact = this.contactMapper.mapContact(contact);
       this.initForm();
       this.setDataSource();
     })
   }
 
-  clickFileInput() {
-    document.getElementById('file').click();
-  }
-
-  onFileChange(event: any) {
-    const file = event.target.files[0]; // <--- File Object for future use.
-    if(event.target.files.length > 0) {
-      const fileType = file.type;
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        if (fileType != 'image/webp') {
-          this.formData.get('thumbnail').setErrors({ format: true });
-        }
-        else {
-          this.image = reader.result;
-        }
-      }
-    }
-    this.formData.controls['thumbnail'].setValue(file ? file.name : null); // <-- Set Value for Validation
-  }
-
   setDataSource() {
     this.dataSource = new MatTableDataSource();
 
-    Object.keys(this.video).forEach(k => {
-      if (k != 'id') {
-        this.dataSource.data.push({
-          criterio: k,
-          valore: this.video[k]
-        })
+    Object.keys(this.contact).forEach(k => {
+      if (k != 'id' && k != 'footer') {
+        if (k == 'type') {
+          this.dataSource.data.push({
+            criterio: k,
+            valore: 
+              this.contact[k].url == 'tel:'
+                ? 'Telefono'
+                  : this.contact[k].url == 'mailto:'
+                  ? 'Email'
+                    : 'Whatsapp'
+          })
+        }
+        else
+          this.dataSource.data.push({
+            criterio: k,
+            valore: this.contact[k]
+          })
       }
     });
-    console.log(this.dataSource.data)
   }
 
   formatField(element, col) {
     if (col == 'valore') {
-      if (element.criterio == 'cover') {
-        return element.valore ? 'Sì' : 'No';
-      } 
-      else return element.valore || '-';
+      return element.valore || '-';
     }
     else {
       if (element.criterio)
@@ -175,7 +167,6 @@ export class VideoComponent implements OnInit {
   }
 
   isFormModified() {
-    console.log(this.formData.value, this.video)
     let modified: boolean = false;
     if (this.insertCompleted)
       return false;
@@ -183,8 +174,13 @@ export class VideoComponent implements OnInit {
       return Object.keys(this.formData.controls).some(ctrl => this.formData.get(ctrl).value && this.formData.get(ctrl).value != '')
     }
     Object.keys(this.formData.value).forEach(k => {
-      if (this.isModifiedValue(this.formData.value[k], this.video[k] || null))
-        modified = true;
+      if (k == 'type') {
+        modified = this.formData.value[k] && this.formData.value[k].url != this.contact[k].url
+      }
+      else {
+        if (this.isModifiedValue(this.formData.value[k], this.contact[k] || null))
+          modified = true;
+      }
     })
     
     return modified;
@@ -197,13 +193,14 @@ export class VideoComponent implements OnInit {
   }
 
   onCancel() {
-    this.isInsert ? this.initForm() : this.getVideo();
+    this.isInsert ? this.initForm() : this.getContact();
     this.editing = false;
     this.formError = null;
   }
 
-  create(video: Video) {
-    this.videoService.create(video, this.image).subscribe((res: any) => {
+  create(contact: Contatto) {
+    contact.footer = this.footer;
+    this.contactService.create(contact).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
@@ -225,8 +222,8 @@ export class VideoComponent implements OnInit {
     })
   }
 
-  edit(video: Video) {
-    this.videoService.edit(video, this.id, this.image, this.video.thumbnail).subscribe((res: any) => {
+  edit(contact: Contatto) {
+    this.contactService.edit(contact, this.id).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
@@ -237,7 +234,7 @@ export class VideoComponent implements OnInit {
         disableClose: true
       }).afterClosed().subscribe(() => {
         this.editing = false;
-        this.getVideo();
+        this.getContact();
         this.setDataSource();
       })
     }, (error) => {
@@ -252,7 +249,7 @@ export class VideoComponent implements OnInit {
     const ids: number[] = [this.id];
     this.dialog.open(ModaleComponent, {
       data: {
-        body: "Procedere all'eliminazione del video?",
+        body: "Procedere all'eliminazione del contatto?",
         onConfirm: () => {
           this.doDelete(ids);
         }
@@ -264,7 +261,7 @@ export class VideoComponent implements OnInit {
   }
 
   doDelete(ids: number[]) {
-    this.videoService.bulkDelete(ids).subscribe((res: any) => {
+    this.contactService.bulkDelete(ids).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
@@ -274,7 +271,7 @@ export class VideoComponent implements OnInit {
         restoreFocus: false,
         disableClose: true
       }).afterClosed().subscribe(() => {
-        this.router.navigate(['/videos'])
+        this.router.navigate([this.footer ? '/footer-contacts' : '/contacts'])
       })
     }, error => {
       console.error(error)

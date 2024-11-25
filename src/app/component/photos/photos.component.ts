@@ -113,6 +113,7 @@ export class PhotosComponent implements OnInit {
   }
 
   update() {
+    this.formError = null;
     let photos: Photo[] = [];
     this.dataSource.data.forEach(photo => {
       if (photo.cover != this.photos.find(el => el.id == photo.id).cover)
@@ -153,6 +154,7 @@ export class PhotosComponent implements OnInit {
   }
 
   delete() {
+    this.formError = null;
     const ids: number[] = this.dataSource.data.filter(el => el.checked).map(el => el.id);
     this.dialog.open(ModaleComponent, {
       data: {

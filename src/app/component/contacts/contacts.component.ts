@@ -1,18 +1,20 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatCheckboxChange } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Video } from 'src/app/interface/video';
-import { VideoMapperService } from 'src/app/services/video-mapper.service';
-import { VideoService } from 'src/app/services/video.service';
+import { Contatto } from 'src/app/interface/contact';
+import { ContactMapperService } from 'src/app/services/contact-mapper.service';
+import { ContactService } from 'src/app/services/contact.service';
 import { ModaleComponent } from '../modale/modale.component';
 
 @Component({
-  selector: 'app-videos',
-  templateUrl: './videos.component.html',
-  styleUrls: ['./videos.component.css']
+  selector: 'app-contacts',
+  templateUrl: './contacts.component.html',
+  styleUrls: ['./contacts.component.css']
 })
-export class VideosComponent implements OnInit {
-  videos: Video[] = [];
+export class ContactsComponent implements OnInit {
+  contacts: Contatto[] = [];
+
+  footer: boolean;
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = [];
@@ -25,31 +27,37 @@ export class VideosComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private videoService: VideoService, 
-    private videoMapper: VideoMapperService, private cdr: ChangeDetectorRef) { }
+  constructor(private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private contactService: ContactService, 
+    private contactMapper: ContactMapperService, private cdr: ChangeDetectorRef) { 
+      this.footer = router.url.includes('footer');
+  }
 
   ngOnInit() {
-    this.displayedColumns = ['checked', 'title', 'cover'];
+    this.displayedColumns = this.footer ? ['checked', 'desc', 'type'] :['checked', 'name', 'desc', 'type'];
     this.columnLabels = [
       {
-        id: 'title',
-        label: 'Titolo'
+        id: 'name',
+        label: 'Nome'
       },
       {
-        id: 'cover',
-        label: 'Flag cover'
+        id: 'desc',
+        label: 'Descrizione'
+      },
+      {
+        id: 'type',
+        label: 'Tipologia'
       }
     ];
 
     this.dataSource = new MatTableDataSource();
 
-    this.getVideos();
+    this.getContacts();
   }
 
-  getVideos() {
-    this.videos = [];
-    this.videoService.getVideos().subscribe((res: any) => {
-      this.videos = res.map(el => this.videoMapper.mapVideo(el));
+  getContacts() {
+    this.contacts = [];
+    this.contactService.getContacts(this.footer).subscribe((res: any) => {
+      this.contacts = res.map(el => this.contactMapper.mapContact(el));
 
       this.populateDataSource();
       this.setFilterPredicate();
@@ -60,15 +68,17 @@ export class VideosComponent implements OnInit {
 
   populateDataSource() {
     this.dataSource.data = [];
-    this.videos.forEach(video => {
-      this.dataSource.data.push({...video});
+    this.contacts.forEach(event => {
+      this.dataSource.data.push({...event});
     });
   }
 
   setFilterPredicate() {
     this.dataSource.filterPredicate = (data: any, filter: string) => {
+      console.log(data)
       return Object.keys(data).some(k => {
-        return k == 'title' && this.displayedColumns.includes(k) && data[k].toLowerCase().includes(filter.toLowerCase())
+        console.log(k, this.displayedColumns)
+        return k != 'checked' && k != 'icon' && this.displayedColumns.includes(k) && data[k] && data[k].toLowerCase().includes(filter.toLowerCase())
       });
     }
 
@@ -125,9 +135,13 @@ export class VideosComponent implements OnInit {
   }
 
   selectAll(event: MatCheckboxChange) {
-    (this.dataSource.filteredData || this.dataSource.data).forEach(el => {
+    (this.dataSource.filteredData || this.dataSource.data).filter(el => !el.admin).forEach(el => {
       el.checked = event.checked;
     });
+  }
+
+  getFilteredDisplayedColumns() {
+    return this.displayedColumns.filter(el => el != 'checked')
   }
 
   delete() {
@@ -147,7 +161,7 @@ export class VideosComponent implements OnInit {
   }
 
   doDelete(ids: number[]) {
-    this.videoService.bulkDelete(ids).subscribe((res: any) => {
+    this.contactService.bulkDelete(ids).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
@@ -157,7 +171,7 @@ export class VideosComponent implements OnInit {
         restoreFocus: false,
         disableClose: true
       }).afterClosed().subscribe(() => {
-        this.getVideos();
+        this.getContacts();
         (document.getElementById('filterInput') as HTMLInputElement).value = '';
       })
     }, error => {

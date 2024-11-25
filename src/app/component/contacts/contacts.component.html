@@ -7,20 +7,6 @@
         <p class="text-danger fw-bold">{{formError}}</p>
     </div>
 
-    <div class="p-2">
-        <div class="p-2 border border-warning">
-            <div class="d-flex mb-2">
-                <div class="me-3">
-                    <i class="fa-solid fa-circle-info"></i>
-                </div>
-                <div>
-                    <span>Carica 1 solo video con il flag cover spuntato per mantenere l'impaginazione del layout della home page</span>
-                </div>
-            </div>
-            <small><em>Il flag cover indica se il video deve essere mostrato nella relativa sezione della home page</em></small>
-        </div>
-    </div>
-
     <mat-form-field *ngIf="dataSource?.data.length > 0" class="w-100">
         <mat-label>Filtro</mat-label>
         <input id="filterInput" matInput (keyup)="applyFilter($event)" #input>
@@ -43,24 +29,20 @@
                 </td>
             </ng-container>
 
-            <!-- titolo -->
-            <ng-container matColumnDef="title">
-                <th mat-header-cell mat-sort-header *matHeaderCellDef class="px-3 fw-bold"> {{getColumnLabel('title')}} </th>
-                <td mat-cell *matCellDef="let element" class="p-3" (click)="navigateTo(element)" role="button">
-                    <span>{{element['title']}}</span>
-                </td>
-            </ng-container>
-
-            <!-- flag cover -->
-            <ng-container matColumnDef="cover">
-                <th mat-header-cell *matHeaderCellDef class="px-3 fw-bold"> {{getColumnLabel('cover')}} </th>
-                <td mat-cell *matCellDef="let element" class="p-3" (click)="navigateTo(element)">
-                    <mat-checkbox [(ngModel)]="element.cover" color="primary" disabled></mat-checkbox>
-                </td>
+            <ng-container *ngFor="let col of getFilteredDisplayedColumns()">
+                <ng-container [matColumnDef]="col">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="px-3 fw-bold"> {{getColumnLabel(col)}} </th>
+                    <td mat-cell *matCellDef="let element" class="px-3" (click)="navigateTo(element)" role="button">
+                        <span *ngIf="col != 'type'; else iconTemplate">{{element[col] || '-'}}</span>
+                        <ng-template #iconTemplate>
+                            <span><i [class]="element[col].icon + ' text-' + element[col].color"></i></span>
+                        </ng-template>
+                    </td>
+                </ng-container>
             </ng-container>
 
             <ng-container matColumnDef="noData">
-                <td mat-footer-cell *matFooterCellDef colspan="3" class="text-center border-0">Nessun video trovato</td>
+                <td mat-footer-cell *matFooterCellDef colspan="4" class="text-center border-0">Nessun contatto presente</td>
              </ng-container>
         
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -80,5 +62,5 @@
 </div>
 
 <div class="row px-2 mb-5">
-    <a class="btn btn-primary" [routerLink]="['insert']">Aggiungi video</a>
+    <a class="btn btn-primary" [routerLink]="['insert']">Aggiungi contatto</a>
 </div>

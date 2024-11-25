@@ -14,7 +14,7 @@ export class VideoMapperService {
       title: item['TITOLO'],
       url: item['URL'],
       thumbnail: item['MINIATURA'],
-      cover: item['FLAG_COPERTINA'] == 1 ? true : false
+      cover: item['FLAG_COPERTINA'] == 1
     }
   }
 }

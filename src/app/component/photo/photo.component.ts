@@ -180,7 +180,7 @@ export class PhotoComponent implements OnInit, IFormComponent {
       }).afterClosed().subscribe(() => {
         this.insertCompleted = true;
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.navigate(['/photo']);
+        this.router.navigate(['/photos']);
       })
     }, (error) => {
       console.error(error);

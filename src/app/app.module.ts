@@ -9,7 +9,7 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventsComponent } from './component/events/events.component';
-import { MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule, MatDialogModule, MatCheckboxModule, MatSelectModule, MatOptionModule } from '@angular/material';
 import { EventComponent } from './component/event/event.component';
 import { ModaleComponent } from './component/modale/modale.component';
 import { LoginComponent } from './component/login/login.component';
@@ -24,6 +24,8 @@ import { PhotosComponent } from './component/photos/photos.component';
 import { VideosComponent } from './component/videos/videos.component';
 import { PhotoComponent } from './component/photo/photo.component';
 import { VideoComponent } from './component/video/video.component';
+import { ContactsComponent } from './component/contacts/contacts.component';
+import { ContactComponent } from './component/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { VideoComponent } from './component/video/video.component';
     PhotosComponent,
     VideosComponent,
     PhotoComponent,
-    VideoComponent
+    VideoComponent,
+    ContactsComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,8 @@ import { VideoComponent } from './component/video/video.component';
     MatInputModule,
     MatDialogModule,
     MatCheckboxModule,
+    MatSelectModule,
+    MatOptionModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgHttpLoaderModule.forRoot(),

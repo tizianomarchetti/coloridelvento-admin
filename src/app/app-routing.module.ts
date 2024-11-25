@@ -17,6 +17,8 @@ import { PhotosComponent } from './component/photos/photos.component';
 import { PhotoComponent } from './component/photo/photo.component';
 import { VideosComponent } from './component/videos/videos.component';
 import { VideoComponent } from './component/video/video.component';
+import { ContactsComponent } from './component/contacts/contacts.component';
+import { ContactComponent } from './component/contact/contact.component';
 
 
 const routes: Routes = [
@@ -81,7 +83,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: "component",
+    path: "components",
     canActivateChild: [AuthGuard],
     children: [
       {
@@ -101,7 +103,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: "photo",
+    path: "photos",
     canActivateChild: [AuthGuard],
     children: [
       {
@@ -116,7 +118,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: "video",
+    path: "videos",
     canActivateChild: [AuthGuard],
     children: [
       {
@@ -131,6 +133,46 @@ const routes: Routes = [
       {
         path: ":id",
         component: VideoComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: "contacts",
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: ContactsComponent
+      },
+      {
+        path: "insert",
+        component: ContactComponent,
+        canDeactivate: [CanDeactivateGuard]
+      },
+      {
+        path: ":id",
+        component: ContactComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: "footer-contacts",
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: ContactsComponent
+      },
+      {
+        path: "insert",
+        component: ContactComponent,
+        canDeactivate: [CanDeactivateGuard]
+      },
+      {
+        path: ":id",
+        component: ContactComponent,
         canDeactivate: [CanDeactivateGuard]
       }
     ]

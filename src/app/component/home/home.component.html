@@ -11,7 +11,7 @@
     <div *ngIf="bandExploded">
         <ul>
             <li><a [routerLink]="['/band']" >Band</a></li>
-            <li><a [routerLink]="['/component']" >Componenti</a></li>
+            <li><a [routerLink]="['/components']" >Componenti</a></li>
         </ul>
     </div>
     <p>
@@ -19,8 +19,17 @@
     </p>
     <div *ngIf="mediaExploded">
         <ul>
-            <li><a [routerLink]="['/photo']" >Foto</a></li>
-            <li><a [routerLink]="['/video']" >Video</a></li>
+            <li><a [routerLink]="['/photos']" >Foto</a></li>
+            <li><a [routerLink]="['/videos']" >Video</a></li>
+        </ul>
+    </div>
+    <p>
+        <a class="text-link" (click)="contattiExploded = !contattiExploded" >Contatti</a>
+    </p>
+    <div *ngIf="contattiExploded">
+        <ul>
+            <li><a [routerLink]="['/contacts']" >Contatti home page</a></li>
+            <li><a [routerLink]="['/footer-contacts']" >Contatti footer</a></li>
         </ul>
     </div>
 </div>
