@@ -9,6 +9,7 @@ export class HomeComponent implements OnInit {
   bandExploded: boolean = false;
   mediaExploded: boolean = false;
   contattiExploded: boolean = false;
+  quizExploded: boolean = false;
 
   constructor() { }
 

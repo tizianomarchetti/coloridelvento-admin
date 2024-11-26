@@ -20,6 +20,7 @@ import { VideoComponent } from './component/video/video.component';
 import { ContactsComponent } from './component/contacts/contacts.component';
 import { ContactComponent } from './component/contact/contact.component';
 import { FormContattoComponent } from './component/form-contatto/form-contatto.component';
+import { QuizComponent } from './component/quiz/quiz.component';
 
 
 const routes: Routes = [
@@ -180,9 +181,25 @@ const routes: Routes = [
   },
   {
     path: "contact-form",
-    component: FormContattoComponent,
-    canActivate: [AuthGuard],
-    canDeactivate: [CanDeactivateGuard]
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: FormContattoComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: "quiz",
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: QuizComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
   }
 ];
 

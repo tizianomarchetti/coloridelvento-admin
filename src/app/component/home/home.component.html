@@ -33,4 +33,14 @@
             <li><a [routerLink]="['/contact-form']" >Form contatto</a></li>
         </ul>
     </div>
+    <p>
+        <a class="text-link" (click)="quizExploded = !quizExploded" role="button">Quiz Disney</a>
+    </p>
+    <div *ngIf="quizExploded">
+        <ul>
+            <li><a [routerLink]="['/quiz']" >Pagina principale</a></li>
+            <li><a [routerLink]="['/question-answers']" >Domande e risposte</a></li>
+            <li><a [routerLink]="['/results']" >Risultati</a></li>
+        </ul>
+    </div>
 </div>

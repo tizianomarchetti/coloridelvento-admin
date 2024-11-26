@@ -1,4 +1,4 @@
 export class FormContatto {
     email: string;
-    subject: string
+    subject: string;
 }
