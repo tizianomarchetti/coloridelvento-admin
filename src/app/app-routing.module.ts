@@ -19,6 +19,7 @@ import { VideosComponent } from './component/videos/videos.component';
 import { VideoComponent } from './component/video/video.component';
 import { ContactsComponent } from './component/contacts/contacts.component';
 import { ContactComponent } from './component/contact/contact.component';
+import { FormContattoComponent } from './component/form-contatto/form-contatto.component';
 
 
 const routes: Routes = [
@@ -176,6 +177,12 @@ const routes: Routes = [
         canDeactivate: [CanDeactivateGuard]
       }
     ]
+  },
+  {
+    path: "contact-form",
+    component: FormContattoComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuard]
   }
 ];
 

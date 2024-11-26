@@ -6,7 +6,7 @@
         <a [routerLink]="['/events']" >Eventi</a>
     </p>
     <p>
-        <a class="text-link" (click)="bandExploded = !bandExploded" >Band e componenti</a>
+        <a class="text-link" (click)="bandExploded = !bandExploded" role="button">Band e componenti</a>
     </p>
     <div *ngIf="bandExploded">
         <ul>
@@ -15,7 +15,7 @@
         </ul>
     </div>
     <p>
-        <a class="text-link" (click)="mediaExploded = !mediaExploded" >Media</a>
+        <a class="text-link" (click)="mediaExploded = !mediaExploded" role="button">Media</a>
     </p>
     <div *ngIf="mediaExploded">
         <ul>
@@ -24,12 +24,13 @@
         </ul>
     </div>
     <p>
-        <a class="text-link" (click)="contattiExploded = !contattiExploded" >Contatti</a>
+        <a class="text-link" (click)="contattiExploded = !contattiExploded" role="button">Contatti</a>
     </p>
     <div *ngIf="contattiExploded">
         <ul>
             <li><a [routerLink]="['/contacts']" >Contatti home page</a></li>
             <li><a [routerLink]="['/footer-contacts']" >Contatti footer</a></li>
+            <li><a [routerLink]="['/contact-form']" >Form contatto</a></li>
         </ul>
     </div>
 </div>

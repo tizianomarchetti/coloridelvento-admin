@@ -26,6 +26,7 @@ import { PhotoComponent } from './component/photo/photo.component';
 import { VideoComponent } from './component/video/video.component';
 import { ContactsComponent } from './component/contacts/contacts.component';
 import { ContactComponent } from './component/contact/contact.component';
+import { FormContattoComponent } from './component/form-contatto/form-contatto.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ContactComponent } from './component/contact/contact.component';
     PhotoComponent,
     VideoComponent,
     ContactsComponent,
-    ContactComponent
+    ContactComponent,
+    FormContattoComponent
   ],
   imports: [
     BrowserModule,

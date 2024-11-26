@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ROOT } from '../config/Constants';
 import { HttpClient } from '@angular/common/http';
 import { Contatto } from '../interface/contact';
+import { FormContatto } from '../interface/contact-form';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,9 @@ export class ContactService {
   updateContactUrl: string = ROOT + 'contact/update';
   createContactUrl: string = ROOT + 'contact/create';
   bulkDeleteUrl: string = ROOT + 'contact/delete';
+
+  contactFormUrl: string = ROOT + 'contact/getContactForm';
+  updateContactFormUrl: string = ROOT + 'contact/updateContactForm';
 
   constructor(private http: HttpClient) { }
 
@@ -36,5 +40,13 @@ export class ContactService {
 
   bulkDelete(ids: number[]) {
     return this.http.put(this.bulkDeleteUrl, { ids });
+  }
+
+  getContactForm() {
+    return this.http.get(this.contactFormUrl);
+  }
+
+  editContactForm(form: FormContatto) {
+    return this.http.put(this.updateContactFormUrl, { form });
   }
 }

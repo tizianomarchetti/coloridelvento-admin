@@ -1,0 +1,88 @@
+<div class="row mb-4">
+    <a [routerLink]="['/']" ><i class="fa-solid fa-angles-left"></i> Torna indietro</a>
+</div>
+
+<div class="row">
+
+    <form *ngIf="formData" class="h-100" [formGroup]="formData">
+
+        <h2 id="title" class="mb-5">{{(editing ? 'Modifica' : 'Dettaglio') + ' form contatto'}}</h2>
+
+        <div *ngIf="formError" class="mb-5">
+            <p class="text-danger fw-bold">{{formError}}</p>
+        </div>
+
+        <ng-container *ngIf="editing; else disabled">
+
+            <mat-form-field class="form-field w-100 my-1 ms-1">
+                <mat-label>Indirizzo mail*</mat-label>
+                <input matInput type="email" id="email" formControlName="email">
+
+                <mat-error *ngIf="formData.get('email').invalid && formData.get('email').touched">
+                    <small class="text-danger"
+                        *ngIf="formData.get('email').errors?.required">
+                        Campo obbligatorio.
+                    </small>
+
+                    <small class="text-danger ms-1"
+                        *ngIf="formData.get('email').errors?.email || formData.get('email').errors.pattern">
+                        Formato email errato.
+                    </small>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field w-100 my-1 ms-1">
+                <mat-label>Oggetto mail*</mat-label>
+                <input matInput type="text" id="subject" formControlName="subject">
+
+                <mat-error *ngIf="formData.get('subject').invalid && formData.get('subject').touched">
+                    <small class="text-danger"
+                        *ngIf="formData.get('subject').errors?.required">
+                        Campo obbligatorio.
+                    </small>
+                </mat-error>
+            </mat-form-field>
+
+        </ng-container>
+
+        <ng-template #disabled>
+
+            <div *ngIf="dataSource" class="overflow-auto mb-5">
+                <table mat-table [dataSource]="dataSource" matSort class="w-100 bg-transparent">
+    
+                    <ng-container *ngFor="let col of displayedColumns">
+                        <ng-container [matColumnDef]="col">
+                            <td mat-cell *matCellDef="let element" class="px-3" [class.fw-bold]="col == 'valore'">
+                                <span>{{formatField(element, col)}}</span>
+                            </td>
+                        </ng-container>
+                    </ng-container>
+                
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                </table>
+            </div>
+
+        </ng-template>
+
+    </form>
+
+</div>
+
+<div>
+    <ng-container *ngIf="!editing; else editingCta">
+        <div class="row p-2">
+            <button class="btn btn-primary" (click)="editing = true">Modifica</button>
+        </div>
+    </ng-container>
+    
+    <ng-template #editingCta>
+        <button class="btn btn-primary me-2" (click)="confirm()" [disabled]="!formData.valid">
+            Conferma
+        </button>
+
+        <button class="btn btn-light text-primary border-primary" (click)="cancel()">
+            Annulla
+        </button>
+    </ng-template>    
+</div>

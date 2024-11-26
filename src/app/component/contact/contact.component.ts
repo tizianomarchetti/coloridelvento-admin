@@ -7,13 +7,14 @@ import { ContactMapperService } from 'src/app/services/contact-mapper.service';
 import { ContactService } from 'src/app/services/contact.service';
 import { ModaleComponent } from '../modale/modale.component';
 import { ContactForm } from 'src/app/form/contact.form';
+import { IFormComponent } from 'src/app/interface/i-form-component';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, IFormComponent {
   id: number;
   contact: Contatto;
 

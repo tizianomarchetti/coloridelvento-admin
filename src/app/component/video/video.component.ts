@@ -7,13 +7,14 @@ import { VideoMapperService } from 'src/app/services/video-mapper.service';
 import { VideoService } from 'src/app/services/video.service';
 import { ModaleComponent } from '../modale/modale.component';
 import { VideoForm } from 'src/app/form/video.form';
+import { IFormComponent } from 'src/app/interface/i-form-component';
 
 @Component({
   selector: 'app-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.css']
 })
-export class VideoComponent implements OnInit {
+export class VideoComponent implements OnInit, IFormComponent {
   id: number;
   video: Video;
 

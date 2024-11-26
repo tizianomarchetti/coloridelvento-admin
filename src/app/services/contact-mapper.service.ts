@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Contatto } from '../interface/contact';
+import { FormContatto } from '../interface/contact-form';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,13 @@ export class ContactMapperService {
         color: item['COLORE']
       },
       footer: item['FLAG_FOOTER'] == 1
+    }
+  }
+
+  mapContactForm(item: any[]): FormContatto {
+    return {
+      email: item.find(el => el['TITOLO'] == 'mailto')['VALORE'],
+      subject: item.find(el => el['TITOLO'] == 'subject')['VALORE']
     }
   }
 }
