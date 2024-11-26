@@ -133,6 +133,8 @@ export class QuizComponent implements OnInit, IFormComponent {
   }
 
   isFormModified() {
+    if (!this.formData) return false;
+    
     let modified: boolean = false;
     Object.keys(this.formData.value).forEach(k => {
       if (this.isModifiedValue(this.formData.value[k], this.quizPage[k] || null))
