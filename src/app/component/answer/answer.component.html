@@ -1,0 +1,83 @@
+<div class="row mb-4">
+    <a [routerLink]="['/questions/' + questionId]" ><i class="fa-solid fa-angles-left"></i> Torna alla domanda</a>
+</div>
+
+<div class="row">
+    <h2 id="title" class="mb-5">{{(editing ? 'Modifica' : 'Dettaglio') + ' risposta'}}</h2>
+
+    <div *ngIf="!editing" class="col-12 mb-4">
+        <ng-container>
+            <div class="col-12 mb-5">
+                <h4 class="text-center">Risposta #{{answer?.valore}}</h4>
+                <p class="text-center">(Domanda #{{questionId}})</p>
+            </div>
+        </ng-container>
+
+        <h6 class="text-center mb-3">Scegli la lingua da modificare</h6>
+        <div class="row d-flex justify-content-center">
+            <div class="col-6 text-end">
+                <img src="https://coloridelvento.altervista.org/assets/images/it.webp" alt="it" id="it" class="rounded-pill" width="40" 
+                    role="button" (click)="setLang('it')">
+            </div>
+            <div class="col-6">
+                <img src="https://coloridelvento.altervista.org/assets/images/en.webp" alt="en" id="en" class="rounded-pill" width="40" 
+                    role="button" (click)="setLang('en')">
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="formData && lang" class="h-100">
+
+        <div *ngIf="formError" class="mb-5">
+            <p class="text-danger fw-bold">{{formError}}</p>
+        </div>
+
+        <ng-container *ngIf="editing; else disabled">
+            <form *ngIf="formData" class="h-100" [formGroup]="formData">
+                <mat-form-field class="form-field w-100 my-1 ms-1">
+                    <mat-label>Testo*</mat-label>
+                    <textarea matInput formControlName="desc" id="desc" rows="3"></textarea>
+
+                    <mat-error *ngIf="formData.get('desc').invalid && formData.get('desc').touched">
+                        <small class="text-danger"
+                            *ngIf="formData.get('desc').errors?.required">
+                            Campo obbligatorio.
+                        </small>
+                    </mat-error>
+                </mat-form-field>
+
+            </form>
+
+        </ng-container>
+
+        <ng-template #disabled>
+
+            <hr>
+            <div class="col-12 mb-3">
+                <p><strong>Testo</strong></p>
+                <p>{{formData.value.desc}}</p>
+            </div>
+
+        </ng-template>
+
+    </div>
+
+</div>
+
+<div class="mb-5" *ngIf="formData && lang">
+    <ng-container *ngIf="!editing; else editingCta">
+        <div class="row p-2">
+            <button class="btn btn-primary" (click)="editing = true">Modifica</button>
+        </div>
+    </ng-container>
+    
+    <ng-template #editingCta>
+        <button class="btn btn-primary me-2" (click)="confirm()" [disabled]="!formData.valid">
+            Conferma
+        </button>
+
+        <button class="btn btn-light text-primary border-primary" (click)="cancel()">
+            Annulla
+        </button>
+    </ng-template>
+</div>

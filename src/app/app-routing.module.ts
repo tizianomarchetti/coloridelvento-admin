@@ -23,6 +23,9 @@ import { FormContattoComponent } from './component/form-contatto/form-contatto.c
 import { QuizComponent } from './component/quiz/quiz.component';
 import { ResultsComponent } from './component/results/results.component';
 import { ResultComponent } from './component/result/result.component';
+import { QuestionsComponent } from './component/questions/questions.component';
+import { QuestionComponent } from './component/question/question.component';
+import { AnswerComponent } from './component/answer/answer.component';
 
 
 const routes: Routes = [
@@ -215,6 +218,38 @@ const routes: Routes = [
         path: ":id",
         component: ResultComponent,
         canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: "questions",
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: QuestionsComponent
+      },
+      {
+        path: ":id",
+        canActivateChild: [AuthGuard],
+        children: [
+          {
+            path: "",
+            component: QuestionComponent,
+            canDeactivate: [CanDeactivateGuard]
+          },
+          {
+            path: "answers",
+            canActivateChild: [AuthGuard],
+            children: [
+              {
+                path: ":answerId",
+                component: AnswerComponent,
+                canDeactivate: [CanDeactivateGuard]
+              }
+            ]
+          }
+        ]
       }
     ]
   }

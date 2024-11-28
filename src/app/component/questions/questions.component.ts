@@ -1,19 +1,17 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Result } from 'src/app/interface/result';
-import { DictionaryService } from 'src/app/services/dictionary.service';
+import { Question } from 'src/app/interface/question';
 import { QuizMapperService } from 'src/app/services/quiz-mapper.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
-  selector: 'app-results',
-  templateUrl: './results.component.html',
-  styleUrls: ['./results.component.css']
+  selector: 'app-questions',
+  templateUrl: './questions.component.html',
+  styleUrls: ['./questions.component.css']
 })
-export class ResultsComponent implements OnInit {
-  results: Result[] = [];
-  dictionary: any = null;
+export class QuestionsComponent implements OnInit {
+  questions: Question[] = [];
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = [];
@@ -24,14 +22,14 @@ export class ResultsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   constructor(private router: Router, private route: ActivatedRoute, private quizService: QuizService, 
-    private quizMapper: QuizMapperService, private dictService: DictionaryService) { }
+    private quizMapper: QuizMapperService) { }
 
   ngOnInit() {
-    this.displayedColumns = ['most_answers', 'title'];
+    this.displayedColumns = ['id', 'title'];
     this.columnLabels = [
       {
-        id: 'most_answers',
-        label: 'Maggioranza risposte'
+        id: 'id',
+        label: '#'
       },
       {
         id: 'title',
@@ -41,15 +39,16 @@ export class ResultsComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource();
 
-    this.getResults();
+    this.getQuestions();
   }
 
-  getResults() {
-    this.results = [];
-    this.quizService.getResults().subscribe((res: any) => {
-      this.results = res.map(el => this.quizMapper.mapResult(el));
+  getQuestions() {
+    this.questions = [];
+    this.quizService.getQuestions().subscribe((res: any) => {
+      this.questions = res.map(el => this.quizMapper.mapQuestion(el));
 
       this.populateDataSource();
+      this.setPaginator();
     })
   }
 
@@ -68,21 +67,11 @@ export class ResultsComponent implements OnInit {
 
   populateDataSource() {
     this.dataSource.data = [];
-    this.results.forEach(result => {
+    this.questions.forEach(question => {
       this.dataSource.data.push({
-        ...result,
+        id: question.id,
+        title: question.title_it,
       });
-    });
-
-    this.dictService.getDictionary('it').subscribe((res: any) => {
-      this.dictionary = JSON.parse(res.result);
-
-      this.dataSource.data.forEach(el => {
-        el.title = this.dictionary.section.test.results[el.most_answers].title;
-        el.most_answers = el.most_answers.toUpperCase();
-      });
-
-      this.setPaginator();
     });
   }
 

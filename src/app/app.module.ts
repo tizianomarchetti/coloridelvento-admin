@@ -30,6 +30,9 @@ import { FormContattoComponent } from './component/form-contatto/form-contatto.c
 import { QuizComponent } from './component/quiz/quiz.component';
 import { ResultsComponent } from './component/results/results.component';
 import { ResultComponent } from './component/result/result.component';
+import { QuestionsComponent } from './component/questions/questions.component';
+import { QuestionComponent } from './component/question/question.component';
+import { AnswerComponent } from './component/answer/answer.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,10 @@ import { ResultComponent } from './component/result/result.component';
     FormContattoComponent,
     QuizComponent,
     ResultsComponent,
-    ResultComponent
+    ResultComponent,
+    QuestionsComponent,
+    QuestionComponent,
+    AnswerComponent
   ],
   imports: [
     BrowserModule,

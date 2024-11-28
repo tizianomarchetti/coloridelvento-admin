@@ -1,14 +1,14 @@
 <div class="row mb-4">
-    <a [routerLink]="['/results']" ><i class="fa-solid fa-angles-left"></i> Torna alla lista</a>
+    <a [routerLink]="['/questions']" ><i class="fa-solid fa-angles-left"></i> Torna alla lista</a>
 </div>
 
 <div class="row">
-    <h2 id="title" class="mb-5">{{(editing ? 'Modifica' : 'Dettaglio') + ' risultato'}}</h2>
+    <h2 id="title" class="mb-5">{{(editing ? 'Modifica' : 'Dettaglio') + ' domanda'}}</h2>
 
     <div *ngIf="!editing" class="col-12 mb-4">
         <ng-container>
             <div class="col-12 mb-5">
-                <h4 class="text-center">Maggioranza di risposte {{result?.most_answers}}</h4>
+                <h4 class="text-center">Domanda #{{question?.id}}</h4>
             </div>
         </ng-container>
 
@@ -45,34 +45,6 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="form-field w-100 mt-1 mb-3 ms-1">
-                    <mat-label>Foto (estensione .webp)*</mat-label>
-                    <input type="file" accept="image/webp" id="file" name="file" (change)="onFileChange($event)" hidden>
-                    <input matInput type="text" id="img" formControlName="img" (click)="clickFileInput()" readonly>
-
-                    <mat-error *ngIf="formData.get('img').invalid && formData.get('img').touched">
-                        <small class="text-danger" *ngIf="formData.get('img').errors?.required">
-                            Campo obbligatorio.
-                        </small>
-
-                        <small class="text-danger" *ngIf="formData.get('img').errors?.format">
-                            Formato immagine non valido.
-                        </small>
-                    </mat-error>
-                </mat-form-field>
-
-                <mat-form-field class="form-field w-100 my-1 ms-1">
-                    <mat-label>Testo*</mat-label>
-                    <textarea matInput formControlName="text" id="text" rows="4"></textarea>
-    
-                    <mat-error *ngIf="formData.get('text').invalid && formData.get('text').touched">
-                        <small class="text-danger"
-                            *ngIf="formData.get('text').errors?.required">
-                            Campo obbligatorio.
-                        </small>
-                    </mat-error>
-                </mat-form-field>
-
             </form>
 
         </ng-container>
@@ -81,13 +53,31 @@
 
             <hr>
             <div class="col-12 mb-3">
-                <h5>{{dictionary.section.test.results[result.most_answers].title}}</h5>
+                <p><strong>Titolo</strong></p>
+                <p>{{formData.value.title}}</p>
             </div>
-            <div class="col-12 mb-3 text-center">
-                <img [src]="'https://coloridelvento.altervista.org/assets/images/' + result.img" [alt]="result.most_answers" width="100">
-            </div>
-            <div class="col-12 mb-5">
-                <p>{{dictionary.section.test.results[result.most_answers].text}}</p>
+            <div class="col-12 mb-3 overflow-auto">
+                <p><strong>Risposte</strong></p>
+                <table mat-table [dataSource]="dataSource" class="w-100 bg-transparent">
+        
+                    <ng-container *ngFor="let col of displayedColumns">
+                        <ng-container [matColumnDef]="col">
+                            <th mat-header-cell *matHeaderCellDef class="px-3 fw-bold"> {{getColumnLabel(col)}} </th>
+                            <td mat-cell *matCellDef="let element" class="px-3" (click)="navigateTo(element)" role="button">
+                                <span>{{element[col]}}</span>
+                            </td>
+                        </ng-container>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="noData">
+                        <td mat-footer-cell *matFooterCellDef colspan="4" class="text-center border-0">Nessun dato trovato</td>
+                     </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['noData']" [class.d-none]="dataSource?.data.length > 0"></tr>
+        
+                </table>
             </div>
 
         </ng-template>
