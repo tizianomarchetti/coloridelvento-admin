@@ -28,6 +28,8 @@ import { ContactsComponent } from './component/contacts/contacts.component';
 import { ContactComponent } from './component/contact/contact.component';
 import { FormContattoComponent } from './component/form-contatto/form-contatto.component';
 import { QuizComponent } from './component/quiz/quiz.component';
+import { ResultsComponent } from './component/results/results.component';
+import { ResultComponent } from './component/result/result.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { QuizComponent } from './component/quiz/quiz.component';
     ContactsComponent,
     ContactComponent,
     FormContattoComponent,
-    QuizComponent
+    QuizComponent,
+    ResultsComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,

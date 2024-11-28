@@ -21,6 +21,8 @@ import { ContactsComponent } from './component/contacts/contacts.component';
 import { ContactComponent } from './component/contact/contact.component';
 import { FormContattoComponent } from './component/form-contatto/form-contatto.component';
 import { QuizComponent } from './component/quiz/quiz.component';
+import { ResultsComponent } from './component/results/results.component';
+import { ResultComponent } from './component/result/result.component';
 
 
 const routes: Routes = [
@@ -197,6 +199,21 @@ const routes: Routes = [
       {
         path: "",
         component: QuizComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: "results",
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: ResultsComponent
+      },
+      {
+        path: ":id",
+        component: ResultComponent,
         canDeactivate: [CanDeactivateGuard]
       }
     ]
