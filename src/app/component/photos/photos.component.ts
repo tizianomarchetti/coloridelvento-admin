@@ -12,6 +12,9 @@ import { ModaleComponent } from '../modale/modale.component';
   styleUrls: ['./photos.component.css']
 })
 export class PhotosComponent implements OnInit {
+  showTipCover: boolean = true;
+  showTipOrder: boolean = true;
+
   photos: Photo[] = [];
 
   dataSource: MatTableDataSource<any>;
@@ -30,7 +33,7 @@ export class PhotosComponent implements OnInit {
     private photoMapper: PhotoMapperService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.displayedColumns = ['checked', 'title', 'cover'];
+    this.displayedColumns = ['checked', 'title', 'cover', 'order'];
     this.columnLabels = [
       {
         id: 'title',
@@ -39,6 +42,10 @@ export class PhotosComponent implements OnInit {
       {
         id: 'cover',
         label: 'Flag cover'
+      },
+      {
+        id: 'order',
+        label: 'Ordine'
       }
     ];
 
@@ -97,10 +104,11 @@ export class PhotosComponent implements OnInit {
     return length;
   }
 
-  isAnyCoverModified() {
+  isAnyCoverOrOrderModified() {
     let modified = false;
     this.photos.forEach(photo => {
-      if (photo.cover != this.dataSource.data.find(el => el.id == photo.id).cover)
+      if (photo.cover != this.dataSource.data.find(el => el.id == photo.id).cover
+        || photo.order != this.dataSource.data.find(el => el.id == photo.id).order)
         modified = true;
     });
     return modified;
@@ -112,11 +120,33 @@ export class PhotosComponent implements OnInit {
     });
   }
 
+  verifyUniqueOrder() {
+    let uniqueOrderValues = true;
+    const seen = new Set();
+
+    for (const el of this.dataSource.data.map(el => el.order)) {
+      if (seen.has(el)) {
+        uniqueOrderValues = false;
+        break;
+      }
+      seen.add(el);
+    }
+
+    return uniqueOrderValues 
+      && this.dataSource.data.every(photo => (!photo.cover && !photo.order) || (photo.cover && photo.order));
+  }
+
   update() {
     this.formError = null;
+    if (!this.verifyUniqueOrder()) {
+      this.formError = 'Controlla i valori per la colonna ordine e la loro unicità';
+      window.scrollTo(0, 0);
+      return;
+    }
     let photos: Photo[] = [];
     this.dataSource.data.forEach(photo => {
-      if (photo.cover != this.photos.find(el => el.id == photo.id).cover)
+      if (photo.cover != this.photos.find(el => el.id == photo.id).cover
+        || photo.order != this.photos.find(el => el.id == photo.id).order)
         photos.push(photo);
     });
     this.dialog.open(ModaleComponent, {

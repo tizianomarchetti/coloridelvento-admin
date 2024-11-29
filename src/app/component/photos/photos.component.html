@@ -7,8 +7,9 @@
         <p class="text-danger fw-bold">{{formError}}</p>
     </div>
 
-    <div class="p-2">
+    <div *ngIf="showTipCover" class="p-2">
         <div class="p-2 border border-warning">
+            <p class="text-end text-secondary fw-bold"><span role="button" (click)="showTipCover = false">X</span></p>
             <div class="d-flex mb-2">
                 <div class="me-3">
                     <i class="fa-solid fa-circle-info"></i>
@@ -17,7 +18,23 @@
                     <span>Carica esattamente 4 foto con il flag cover spuntato per mantenere l'impaginazione del layout della home page</span>
                 </div>
             </div>
-            <small><em>Il flag cover indica se la foto deve essere mostrata nella relativa sezione della home page</em></small>
+            <p><small><em>Il flag cover indica se la foto deve essere mostrata nella relativa sezione della home page</em></small></p>
+        </div>
+    </div>
+
+    <div *ngIf="showTipOrder" class="p-2">
+        <div class="p-2 border border-warning">
+            <p class="text-end text-secondary fw-bold"><span role="button" (click)="showTipOrder = false">X</span></p>
+            <div class="d-flex mb-2">
+                <div class="me-3">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <div>
+                    <span>La colonna Ordine è relativa alle sole immagini con flag cover spuntato e indica l'ordine con cui appaiono nella home page</span>
+                </div>
+            </div>
+            <p><small><em>Assegna un ordine soltanto alle immagini con flag cover ed evita valori duplicati</em></small></p>
+            <p><small><em>Non lasciare immagini con flag cover senza ordine</em></small></p>
         </div>
     </div>
     
@@ -55,6 +72,16 @@
                 </td>
             </ng-container>
 
+            <!-- ordine -->
+            <ng-container matColumnDef="order">
+                <th mat-header-cell *matHeaderCellDef class="px-3 fw-bold"> {{getColumnLabel('order')}} </th>
+                <td mat-cell *matCellDef="let element" class="p-3" role="button">
+                    <mat-form-field class="form-field text-center" style="width: 30px;">
+                        <input matInput type="number" name="order" [(ngModel)]="element.order">
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
             <ng-container matColumnDef="noData">
                 <td mat-footer-cell *matFooterCellDef colspan="4" class="text-center border-0">Nessuna foto presente</td>
              </ng-container>
@@ -75,7 +102,7 @@
     <button class="btn btn-light text-danger border-danger" (click)="delete()">Elimina</button>
 </div>
 
-<div class="row p-2" *ngIf="isAnyCoverModified()">
+<div class="row p-2" *ngIf="isAnyCoverOrOrderModified()">
     <button class="btn btn-light text-primary border-primary" (click)="update()">Aggiorna</button>
 </div>
 

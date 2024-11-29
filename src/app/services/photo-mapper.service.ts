@@ -12,7 +12,8 @@ export class PhotoMapperService {
     return {
       id: item['ID'],
       title: item['TITOLO'],
-      cover: item['FLAG_COPERTINA'] == 1
+      cover: item['FLAG_COPERTINA'] == 1,
+      order: item['ORDINE']
     }
   }
 }

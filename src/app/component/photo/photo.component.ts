@@ -164,7 +164,8 @@ export class PhotoComponent implements OnInit, IFormComponent {
       photos.push({
         id: null,
         title: el.title,
-        cover: el.cover
+        cover: el.cover,
+        order: null
       })
     })
     
