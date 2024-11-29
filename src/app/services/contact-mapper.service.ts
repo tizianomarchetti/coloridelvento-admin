@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Contatto } from '../interface/contact';
 import { FormContatto } from '../interface/contact-form';
+import { Social } from '../interface/social';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,16 @@ export class ContactMapperService {
     return {
       email: item.find(el => el['TITOLO'] == 'mailto')['VALORE'],
       subject: item.find(el => el['TITOLO'] == 'subject')['VALORE']
+    }
+  }
+
+  mapSocial(item: any): Social {
+    return {
+      id: item['ID'],
+      type: {
+        url: item['URL'],
+        icon: item['ICONA']
+      }
     }
   }
 }

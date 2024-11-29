@@ -34,6 +34,8 @@ import { QuestionsComponent } from './component/questions/questions.component';
 import { QuestionComponent } from './component/question/question.component';
 import { AnswerComponent } from './component/answer/answer.component';
 import { SingleImageComponent } from './component/single-image/single-image.component';
+import { SocialsComponent } from './component/socials/socials.component';
+import { SocialComponent } from './component/social/social.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { SingleImageComponent } from './component/single-image/single-image.comp
     QuestionsComponent,
     QuestionComponent,
     AnswerComponent,
-    SingleImageComponent
+    SingleImageComponent,
+    SocialsComponent,
+    SocialComponent
   ],
   imports: [
     BrowserModule,

@@ -27,6 +27,8 @@ import { QuestionsComponent } from './component/questions/questions.component';
 import { QuestionComponent } from './component/question/question.component';
 import { AnswerComponent } from './component/answer/answer.component';
 import { SingleImageComponent } from './component/single-image/single-image.component';
+import { SocialsComponent } from './component/socials/socials.component';
+import { SocialComponent } from './component/social/social.component';
 
 
 const routes: Routes = [
@@ -173,6 +175,26 @@ const routes: Routes = [
       {
         path: ":id",
         component: ContactComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: "socials",
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: SocialsComponent
+      },
+      {
+        path: "insert",
+        component: SocialComponent,
+        canDeactivate: [CanDeactivateGuard]
+      },
+      {
+        path: ":id",
+        component: SocialComponent,
         canDeactivate: [CanDeactivateGuard]
       }
     ]

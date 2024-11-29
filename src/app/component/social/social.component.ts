@@ -2,21 +2,20 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Contatto } from 'src/app/interface/contact';
+import { Social } from 'src/app/interface/social';
 import { ContactMapperService } from 'src/app/services/contact-mapper.service';
 import { ContactService } from 'src/app/services/contact.service';
 import { ModaleComponent } from '../modale/modale.component';
-import { ContactForm } from 'src/app/form/contact.form';
-import { IFormComponent } from 'src/app/interface/i-form-component';
+import { SocialForm } from 'src/app/form/social.form';
 
 @Component({
-  selector: 'app-contact',
-  templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css']
+  selector: 'app-social',
+  templateUrl: './social.component.html',
+  styleUrls: ['./social.component.css']
 })
-export class ContactComponent implements OnInit, IFormComponent {
+export class SocialComponent implements OnInit {
   id: number;
-  contact: Contatto;
+  social: Social;
 
   footer: boolean;
 
@@ -24,7 +23,7 @@ export class ContactComponent implements OnInit, IFormComponent {
 
   isInsert: boolean;
 
-  form: ContactForm;
+  form: SocialForm;
   formData: FormGroup;
 
   options: any[] = [];
@@ -38,19 +37,13 @@ export class ContactComponent implements OnInit, IFormComponent {
   insertCompleted: boolean = false;
 
   constructor(private dialog: MatDialog, private route: ActivatedRoute, private contactService: ContactService, 
-    private contactMapper: ContactMapperService, private cdr: ChangeDetectorRef, private router: Router) { 
-    this.footer = router.url.includes('footer');
-  }
+    private contactMapper: ContactMapperService, private cdr: ChangeDetectorRef, private router: Router) { }
 
   ngOnInit() {
     this.columnLabels = [
       {
-        id: 'name',
-        label: 'Nome'
-      },
-      {
-        id: 'desc',
-        label: 'Descrizione'
+        id: 'url',
+        label: 'URL'
       },
       {
         id: 'type',
@@ -59,10 +52,12 @@ export class ContactComponent implements OnInit, IFormComponent {
     ];
 
     this.options = [
-      { url: 'tel:', icon: 'fas fa-phone', color: this.footer ? null : 'dark'},
-      { url: 'mailto:', icon: this.footer ? 'fas fa-envelope' :'fa-regular fa-envelope', color: this.footer ? null : 'danger'},
-      { url: 'https://wa.me/', icon: 'fa-brands fa-whatsapp', color: this.footer ? null : 'success'},
-    ]
+      { icon: 'fa-brands fa-instagram' },
+      { icon: 'fab fa-facebook-f' },
+      { icon: 'fa-brands fa-youtube' },
+      { icon: 'fa-brands fa-spotify' },
+      { icon: 'fa-brands fa-soundcloud' },
+    ];
     
     this.route.params.subscribe(params => {
       this.id = params.id;
@@ -71,20 +66,20 @@ export class ContactComponent implements OnInit, IFormComponent {
       if (this.isInsert) {
         this.initForm();
       } else {
-        this.getContact();
+        this.getSocial();
       }
     });
   }
 
   initForm() {
-    this.form = new ContactForm(this);
+    this.form = new SocialForm(this);
     this.formData = this.form.form;
   }
 
-  getContact() {
+  getSocial() {
     this.dataSource = new MatTableDataSource();
-    this.contactService.getContact(this.id).subscribe((contact: any) => {
-      this.contact = this.contactMapper.mapContact(contact);
+    this.contactService.getSocial(this.id).subscribe((contact: any) => {
+      this.social = this.contactMapper.mapSocial(contact);
       this.initForm();
       this.setDataSource();
     })
@@ -93,25 +88,23 @@ export class ContactComponent implements OnInit, IFormComponent {
   setDataSource() {
     this.dataSource = new MatTableDataSource();
 
-    Object.keys(this.contact).forEach(k => {
-      if (k != 'id' && k != 'footer') {
-        if (k == 'type') {
-          this.dataSource.data.push({
-            criterio: k,
-            valore: 
-              this.contact[k].url == 'tel:'
-                ? 'Telefono'
-                  : this.contact[k].url == 'mailto:'
-                  ? 'Email'
-                    : 'Whatsapp'
-          })
-        }
-        else
-          this.dataSource.data.push({
-            criterio: k,
-            valore: this.contact[k]
-          })
-      }
+    this.dataSource.data.push({
+      criterio: 'url',
+      valore: this.social.type.url
+    });
+
+    this.dataSource.data.push({
+      criterio: 'type',
+      valore: 
+        this.social.type.icon.includes('instagram')
+          ? 'Instagram'
+            : this.social.type.icon.includes('facebook')
+            ? 'Facebook'
+              : this.social.type.icon.includes('youtube')
+              ? 'Youtube'
+                : this.social.type.icon.includes('spotify')
+                ? 'Spotify'
+                  : 'Soundcloud'
     });
   }
 
@@ -176,14 +169,14 @@ export class ContactComponent implements OnInit, IFormComponent {
     }
     Object.keys(this.formData.value).forEach(k => {
       if (k == 'type') {
-        if (this.formData.value[k] && this.formData.value[k].url != this.contact[k].url)
+        if (this.formData.value[k] && this.formData.value[k].icon != this.social[k].icon)
           modified = true;
       }
       else {
-        if (this.isModifiedValue(this.formData.value[k], this.contact[k] || null))
+        if (this.isModifiedValue(this.formData.value[k], this.social ? this.social.type.url : null))
           modified = true;
       }
-    })
+    });
     
     return modified;
   }
@@ -195,14 +188,13 @@ export class ContactComponent implements OnInit, IFormComponent {
   }
 
   onCancel() {
-    this.isInsert ? this.initForm() : this.getContact();
+    this.isInsert ? this.initForm() : this.getSocial();
     this.editing = false;
     this.formError = null;
   }
 
-  create(contact: Contatto) {
-    contact.footer = this.footer;
-    this.contactService.create(contact).subscribe((res: any) => {
+  create(social: Social) {
+    this.contactService.createSocial(social).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
@@ -224,8 +216,8 @@ export class ContactComponent implements OnInit, IFormComponent {
     })
   }
 
-  edit(contact: Contatto) {
-    this.contactService.edit(contact, this.id).subscribe((res: any) => {
+  edit(social: Social) {
+    this.contactService.editSocial(social, this.id).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
@@ -236,7 +228,7 @@ export class ContactComponent implements OnInit, IFormComponent {
         disableClose: true
       }).afterClosed().subscribe(() => {
         this.editing = false;
-        this.getContact();
+        this.getSocial();
         this.setDataSource();
       })
     }, (error) => {
@@ -251,7 +243,7 @@ export class ContactComponent implements OnInit, IFormComponent {
     const ids: number[] = [this.id];
     this.dialog.open(ModaleComponent, {
       data: {
-        body: "Procedere all'eliminazione del contatto?",
+        body: "Procedere all'eliminazione del contatto social?",
         onConfirm: () => {
           this.doDelete(ids);
         }
@@ -263,7 +255,7 @@ export class ContactComponent implements OnInit, IFormComponent {
   }
 
   doDelete(ids: number[]) {
-    this.contactService.bulkDelete(ids).subscribe((res: any) => {
+    this.contactService.bulkDeleteSocial(ids).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
@@ -273,7 +265,7 @@ export class ContactComponent implements OnInit, IFormComponent {
         restoreFocus: false,
         disableClose: true
       }).afterClosed().subscribe(() => {
-        this.router.navigate([this.footer ? '/footer-contacts' : '/contacts'])
+        this.router.navigate(['/socials'])
       })
     }, error => {
       console.error(error)
