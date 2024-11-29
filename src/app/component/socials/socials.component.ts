@@ -157,7 +157,7 @@ export class SocialsComponent implements OnInit {
   }
 
   doDelete(ids: number[]) {
-    this.contactService.bulkDelete(ids).subscribe((res: any) => {
+    this.contactService.bulkDeleteSocial(ids).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
