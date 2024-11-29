@@ -16,7 +16,7 @@
             <mat-form-field class="form-field w-100 mt-1 mb-3 ms-1">
                 <mat-label>Foto (estensione .webp)*</mat-label>
                 <input type="file" accept="image/webp" id="file" name="file" (change)="onFileChange($event)" hidden multiple>
-                <input matInput type="text" id="title" formControlName="title" (click)="clickFileInput()" readonly>
+                <input matInput type="text" id="title" formControlName="title" (click)="clickFileInput()" readonly role="button">
 
                 <mat-error *ngIf="formData.get('title').invalid && formData.get('title').touched">
                     <small class="text-danger" *ngIf="formData.get('title').errors?.required">

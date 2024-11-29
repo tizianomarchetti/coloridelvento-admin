@@ -33,6 +33,7 @@ import { ResultComponent } from './component/result/result.component';
 import { QuestionsComponent } from './component/questions/questions.component';
 import { QuestionComponent } from './component/question/question.component';
 import { AnswerComponent } from './component/answer/answer.component';
+import { SingleImageComponent } from './component/single-image/single-image.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { AnswerComponent } from './component/answer/answer.component';
     ResultComponent,
     QuestionsComponent,
     QuestionComponent,
-    AnswerComponent
+    AnswerComponent,
+    SingleImageComponent
   ],
   imports: [
     BrowserModule,

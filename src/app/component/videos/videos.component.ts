@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatCheckboxChange } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Video } from 'src/app/interface/video';
-import { VideoMapperService } from 'src/app/services/video-mapper.service';
-import { VideoService } from 'src/app/services/video.service';
 import { ModaleComponent } from '../modale/modale.component';
+import { MediaService } from 'src/app/services/media.service';
+import { MediaMapperService } from 'src/app/services/media-mapper.service';
 
 @Component({
   selector: 'app-videos',
@@ -12,6 +12,8 @@ import { ModaleComponent } from '../modale/modale.component';
   styleUrls: ['./videos.component.css']
 })
 export class VideosComponent implements OnInit {
+  showTip: boolean = true;
+
   videos: Video[] = [];
 
   dataSource: MatTableDataSource<any>;
@@ -25,8 +27,8 @@ export class VideosComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private videoService: VideoService, 
-    private videoMapper: VideoMapperService, private cdr: ChangeDetectorRef) { }
+  constructor(private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private mediaService: MediaService, 
+    private mediaMapper: MediaMapperService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.displayedColumns = ['checked', 'title', 'cover'];
@@ -48,8 +50,8 @@ export class VideosComponent implements OnInit {
 
   getVideos() {
     this.videos = [];
-    this.videoService.getVideos().subscribe((res: any) => {
-      this.videos = res.map(el => this.videoMapper.mapVideo(el));
+    this.mediaService.getVideos().subscribe((res: any) => {
+      this.videos = res.map(el => this.mediaMapper.mapVideo(el));
 
       this.populateDataSource();
       this.setFilterPredicate();
@@ -147,7 +149,7 @@ export class VideosComponent implements OnInit {
   }
 
   doDelete(ids: number[]) {
-    this.videoService.bulkDelete(ids).subscribe((res: any) => {
+    this.mediaService.bulkDeleteVideo(ids).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,

@@ -3,11 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Video } from 'src/app/interface/video';
-import { VideoMapperService } from 'src/app/services/video-mapper.service';
-import { VideoService } from 'src/app/services/video.service';
 import { ModaleComponent } from '../modale/modale.component';
 import { VideoForm } from 'src/app/form/video.form';
 import { IFormComponent } from 'src/app/interface/i-form-component';
+import { MediaService } from 'src/app/services/media.service';
+import { MediaMapperService } from 'src/app/services/media-mapper.service';
 
 @Component({
   selector: 'app-video',
@@ -35,8 +35,8 @@ export class VideoComponent implements OnInit, IFormComponent {
   editing: boolean = false;
   insertCompleted: boolean = false;
 
-  constructor(private dialog: MatDialog, private route: ActivatedRoute, private videoService: VideoService, 
-    private videoMapper: VideoMapperService, private cdr: ChangeDetectorRef, private router: Router) { }
+  constructor(private dialog: MatDialog, private route: ActivatedRoute, private mediaService: MediaService, 
+    private mediaMapper: MediaMapperService, private cdr: ChangeDetectorRef, private router: Router) { }
 
   ngOnInit() {
     this.columnLabels = [
@@ -77,8 +77,8 @@ export class VideoComponent implements OnInit, IFormComponent {
 
   getVideo() {
     this.dataSource = new MatTableDataSource();
-    this.videoService.getVideo(this.id).subscribe((video: any) => {
-      this.video = this.videoMapper.mapVideo(video);
+    this.mediaService.getVideo(this.id).subscribe((video: any) => {
+      this.video = this.mediaMapper.mapVideo(video);
       this.initForm();
       this.setDataSource();
     })
@@ -202,7 +202,7 @@ export class VideoComponent implements OnInit, IFormComponent {
   }
 
   create(video: Video) {
-    this.videoService.create(video, this.image).subscribe((res: any) => {
+    this.mediaService.createVideo(video, this.image).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
@@ -225,7 +225,7 @@ export class VideoComponent implements OnInit, IFormComponent {
   }
 
   edit(video: Video) {
-    this.videoService.edit(video, this.id, this.image, this.video.thumbnail).subscribe((res: any) => {
+    this.mediaService.editVideo(video, this.id, this.image, this.video.thumbnail).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
@@ -263,7 +263,7 @@ export class VideoComponent implements OnInit, IFormComponent {
   }
 
   doDelete(ids: number[]) {
-    this.videoService.bulkDelete(ids).subscribe((res: any) => {
+    this.mediaService.bulkDeleteVideo(ids).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,

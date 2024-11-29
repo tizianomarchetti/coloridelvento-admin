@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog, MatCheckboxChange } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Photo } from 'src/app/interface/photo';
-import { PhotoMapperService } from 'src/app/services/photo-mapper.service';
-import { PhotoService } from 'src/app/services/photo.service';
 import { ModaleComponent } from '../modale/modale.component';
+import { MediaService } from 'src/app/services/media.service';
+import { MediaMapperService } from 'src/app/services/media-mapper.service';
 
 @Component({
   selector: 'app-photos',
@@ -29,8 +29,8 @@ export class PhotosComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, 
-    private photoMapper: PhotoMapperService, private cdr: ChangeDetectorRef) { }
+  constructor(private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private mediaService: MediaService, 
+    private mediaMapper: MediaMapperService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.displayedColumns = ['checked', 'title', 'cover', 'order'];
@@ -56,8 +56,8 @@ export class PhotosComponent implements OnInit {
 
   getPhotos() {
     this.photos = [];
-    this.photoService.getPhotos().subscribe((res: any) => {
-      this.photos = res.map(el => this.photoMapper.mapPhoto(el));
+    this.mediaService.getPhotos().subscribe((res: any) => {
+      this.photos = res.map(el => this.mediaMapper.mapPhoto(el));
 
       this.populateDataSource();
       this.setPaginator();
@@ -163,7 +163,7 @@ export class PhotosComponent implements OnInit {
   }
 
   doUpdate(photos: Photo[]) {
-    this.photoService.bulkUpdate(photos).subscribe((res: any) => {
+    this.mediaService.bulkUpdatePhoto(photos).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
@@ -200,7 +200,7 @@ export class PhotosComponent implements OnInit {
   }
 
   doDelete(ids: number[]) {
-    this.photoService.bulkDelete(ids).subscribe((res: any) => {
+    this.mediaService.bulkDeletePhoto(ids).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,

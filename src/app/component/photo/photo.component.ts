@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatCheckboxChange, MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PhotoForm } from 'src/app/form/photo.form';
-import { PhotoService } from 'src/app/services/photo.service';
 import { ModaleComponent } from '../modale/modale.component';
 import { IFormComponent } from 'src/app/interface/i-form-component';
 import { Photo } from 'src/app/interface/photo';
+import { MediaService } from 'src/app/services/media.service';
 
 @Component({
   selector: 'app-photo',
@@ -33,7 +33,7 @@ export class PhotoComponent implements OnInit, IFormComponent {
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private route: ActivatedRoute, private photoService: PhotoService, 
+  constructor(private dialog: MatDialog, private route: ActivatedRoute, private mediaService: MediaService, 
     private cdr: ChangeDetectorRef, private router: Router) { }
 
   ngOnInit() {
@@ -164,7 +164,7 @@ export class PhotoComponent implements OnInit, IFormComponent {
       })
     })
     
-    this.photoService.bulkCreate(photos, this.images).subscribe((res: any) => {
+    this.mediaService.bulkCreatePhoto(photos, this.images).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,

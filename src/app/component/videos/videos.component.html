@@ -7,7 +7,22 @@
         <p class="text-danger fw-bold">{{formError}}</p>
     </div>
 
-    <div class="p-2">
+    <div *ngIf="showTip" class="p-2">
+        <div class="p-2 border border-warning">
+            <p class="text-end text-secondary fw-bold"><span role="button" (click)="showTip = false">X</span></p>
+            <div class="d-flex mb-2">
+                <div class="me-3">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <div>
+                    <span>Carica 1 solo video con il flag cover spuntato per mantenere l'impaginazione del layout della home page</span>
+                </div>
+            </div>
+            <p><small><em>Il flag cover indica se il video deve essere mostrato nella relativa sezione della home page</em></small></p>
+        </div>
+    </div>
+
+    <!-- <div class="p-2">
         <div class="p-2 border border-warning">
             <div class="d-flex mb-2">
                 <div class="me-3">
@@ -19,7 +34,7 @@
             </div>
             <small><em>Il flag cover indica se il video deve essere mostrato nella relativa sezione della home page</em></small>
         </div>
-    </div>
+    </div> -->
 
     <mat-form-field *ngIf="dataSource?.data.length > 0" class="w-100">
         <mat-label>Filtro</mat-label>
