@@ -26,6 +26,7 @@ import { ResultComponent } from './component/result/result.component';
 import { QuestionsComponent } from './component/questions/questions.component';
 import { QuestionComponent } from './component/question/question.component';
 import { AnswerComponent } from './component/answer/answer.component';
+import { SingleImageComponent } from './component/single-image/single-image.component';
 
 
 const routes: Routes = [
@@ -143,6 +144,18 @@ const routes: Routes = [
         canDeactivate: [CanDeactivateGuard]
       }
     ]
+  },
+  {
+    path: "welcome",
+    component: SingleImageComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuard]
+  },
+  {
+    path: "logo",
+    component: SingleImageComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuard]
   },
   {
     path: "contacts",

@@ -1,1 +1,32 @@
-<p>single-image works!</p>
+<div class="row mb-4">
+    <a [routerLink]="['/']" ><i class="fa-solid fa-angles-left"></i> Torna indietro</a>
+</div>
+
+<div class="row mb-3">
+
+    <div *ngIf="image" class="h-100">
+
+        <h2 id="title" class="mb-5">Modifica {{title}}</h2>
+
+        <div *ngIf="formError" class="mb-5">
+            <p class="text-danger fw-bold">{{formError}}</p>
+        </div>
+
+        <div class="mb-3 text-center">
+            <img [src]="image" [alt]="imgTitle" width="200">
+        </div>
+
+    </div>
+
+</div>
+
+<div class="mb-5" *ngIf="image">
+    <div class="row p-2">
+        <input type="file" accept="image/webp" id="file" name="file" (change)="onFileChange($event)" hidden>
+        <button class="btn btn-light text-primary border-primary" (click)="clickFileInput()">Carica file</button>
+    </div>
+
+    <div *ngIf="imageLoaded" class="row p-2">
+        <button class="btn btn-primary" (click)="confirm()">Salva</button>
+    </div>
+</div>

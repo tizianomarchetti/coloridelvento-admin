@@ -19,6 +19,11 @@ export class MediaService {
   createVideoUrl: string = ROOT + 'media/video/create';
   bulkDeleteVideoUrl: string = ROOT + 'media/video/delete';
 
+  editLogoUrl: string = ROOT + 'media/updateLogo';
+  editCoverUrl: string = ROOT + 'media/updateCover';
+
+  getImageUrl: string = ROOT + 'media/getImage';
+
   constructor(private http: HttpClient) { }
 
   // photo
@@ -66,5 +71,30 @@ export class MediaService {
 
   bulkDeleteVideo(ids: number[]) {
     return this.http.put(this.bulkDeleteVideoUrl, { ids });
+  }
+
+  // logo
+
+  editLogo(image: any) {
+    return this.http.put(this.editLogoUrl, { image });
+  }
+
+  // cover
+
+  editCover(image: any) {
+    return this.http.put(this.editCoverUrl, { image });
+  }
+
+  // common
+
+  getImage(image: string) {
+    return this.http.post(
+      this.getImageUrl,
+      { image },
+      { 
+        responseType: 'blob' as 'json', 
+        headers: { 'Cache-Control': 'no-cache' } 
+      }
+    );
   }
 }
