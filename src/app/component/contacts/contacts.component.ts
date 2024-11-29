@@ -75,9 +75,7 @@ export class ContactsComponent implements OnInit {
 
   setFilterPredicate() {
     this.dataSource.filterPredicate = (data: any, filter: string) => {
-      console.log(data)
       return Object.keys(data).some(k => {
-        console.log(k, this.displayedColumns)
         return k != 'checked' && k != 'icon' && this.displayedColumns.includes(k) && data[k] && data[k].toLowerCase().includes(filter.toLowerCase())
       });
     }

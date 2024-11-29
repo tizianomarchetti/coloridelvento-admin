@@ -117,7 +117,6 @@ export class VideoComponent implements OnInit, IFormComponent {
         })
       }
     });
-    console.log(this.dataSource.data)
   }
 
   formatField(element, col) {
@@ -176,7 +175,6 @@ export class VideoComponent implements OnInit, IFormComponent {
   }
 
   isFormModified() {
-    console.log(this.formData.value, this.video)
     let modified: boolean = false;
     if (this.insertCompleted)
       return false;

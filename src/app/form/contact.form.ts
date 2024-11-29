@@ -30,7 +30,6 @@ export class ContactForm {
             ]
         });
 
-        console.log(this.form)
     }
 
     get name() { return this.form.get('name') }

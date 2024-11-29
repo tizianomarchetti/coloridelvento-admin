@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
     if (this.formData.valid) {
       this.loginError = null;
       this.authService.login(this.form.email.value, this.form.password.value).subscribe((res: any) => {
-        console.log(res)
         const user: Utente = this.userMapper.mapUtente(res);
         const rememberMe = this.formData.get('rememberMe').value == true;
         const token = user.token;
@@ -62,8 +61,8 @@ export class LoginComponent implements OnInit {
         this.loginError = error.error.message;
       });
     } else {
-      console.log(this.formData.get('password').errors)
-      console.log(this.formData.get('password').validator)
+      console.error(this.formData.get('password').errors)
+      console.error(this.formData.get('password').validator)
     }
   }
 

@@ -65,11 +65,8 @@ export class PhotoComponent implements OnInit, IFormComponent {
     document.getElementById('file').click();
   }
 
-  stampaerrori(errori) { console.log(errori) }
-
   onFileChange(event: any) {
     const files = event.target.files; // <--- File Object for future use.
-    console.log(files)
     if(files.length > 0) {
       this.formatErrors = false;
       this.dataSource = new MatTableDataSource();
@@ -90,7 +87,6 @@ export class PhotoComponent implements OnInit, IFormComponent {
             this.formData.controls['title'].value 
               ? [this.formData.controls['title'].value, file.name].join(', ')
               : file.name);
-            console.log(this.formData.controls['title'].value)
             const image = { title: [index, file.name].join('_'), file: reader.result }
             this.images.push(image);
             this.populateDataSource(image);
@@ -123,7 +119,6 @@ export class PhotoComponent implements OnInit, IFormComponent {
   }
 
   remove(element: any) {
-    console.log(element.title)
     this.dataSource.data = this.dataSource.data.filter(el => el.title != element.title);
     this.images = this.images.filter(el => el.title != element.title);
 

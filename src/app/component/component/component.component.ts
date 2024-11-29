@@ -52,7 +52,6 @@ export class ComponentComponent implements OnInit, IFormComponent {
   initForm() {
     this.dictService.getDictionary(this.lang).subscribe((res: any) => {
       this.dictionary = JSON.parse(res.result);
-      console.log(this.dictionary)
       this.editorContent = this.component ? (this.dictionary.section.about.bio[this.component.bio] || '') : '';
       this.originalContent = this.editorContent;
       this.form = new ComponentForm(this);

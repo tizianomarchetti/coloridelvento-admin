@@ -105,7 +105,6 @@ export class AnswerComponent implements OnInit {
   }
 
   isModifiedValue(firstValue, secondValue) {
-    console.log(firstValue, secondValue)
     if ((firstValue == '' && !secondValue) || (secondValue == '' && !firstValue))
       return false;
     return firstValue != secondValue;
