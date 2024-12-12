@@ -29,6 +29,7 @@ import { AnswerComponent } from './component/answer/answer.component';
 import { SingleImageComponent } from './component/single-image/single-image.component';
 import { SocialsComponent } from './component/socials/socials.component';
 import { SocialComponent } from './component/social/social.component';
+import { TitlesComponent } from './component/titles/titles.component';
 
 
 const routes: Routes = [
@@ -70,6 +71,11 @@ const routes: Routes = [
         component: EventsComponent
       },
       {
+        path: "titles",
+        component: TitlesComponent,
+        canDeactivate: [CanDeactivateGuard]
+      },
+      {
         path: "insert",
         component: EventComponent,
         canDeactivate: [CanDeactivateGuard]
@@ -77,6 +83,17 @@ const routes: Routes = [
       {
         path: ":id",
         component: EventComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: 'about',
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "titles",
+        component: TitlesComponent,
         canDeactivate: [CanDeactivateGuard]
       }
     ]
@@ -108,6 +125,17 @@ const routes: Routes = [
       {
         path: ":id",
         component: ComponentComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
+  },
+  {
+    path: 'media',
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: "titles",
+        component: TitlesComponent,
         canDeactivate: [CanDeactivateGuard]
       }
     ]
@@ -166,6 +194,11 @@ const routes: Routes = [
       {
         path: "",
         component: ContactsComponent
+      },
+      {
+        path: "titles",
+        component: TitlesComponent,
+        canDeactivate: [CanDeactivateGuard]
       },
       {
         path: "insert",
@@ -231,14 +264,19 @@ const routes: Routes = [
     ]
   },
   {
-    path: "quiz",
+    path: "test",
     canActivateChild: [AuthGuard],
     children: [
       {
         path: "",
         component: QuizComponent,
         canDeactivate: [CanDeactivateGuard]
-      }
+      },
+      {
+        path: "titles",
+        component: TitlesComponent,
+        canDeactivate: [CanDeactivateGuard]
+      },
     ]
   },
   {

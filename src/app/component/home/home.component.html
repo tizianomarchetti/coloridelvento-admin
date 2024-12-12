@@ -3,13 +3,20 @@
 </div>
 <div class="row py-5">
     <p>
-        <a [routerLink]="['/events']" >Eventi</a>
+        <a class="text-link" (click)="eventExploded = !eventExploded" role="button">Eventi</a>
     </p>
+    <div *ngIf="eventExploded">
+        <ul>
+            <li><a [routerLink]="['/events/titles']" >Titoli</a></li>
+            <li><a [routerLink]="['/events']" >Lista eventi</a></li>
+        </ul>
+    </div>
     <p>
         <a class="text-link" (click)="bandExploded = !bandExploded" role="button">Band e componenti</a>
     </p>
     <div *ngIf="bandExploded">
         <ul>
+            <li><a [routerLink]="['/about/titles']" >Titoli</a></li>
             <li><a [routerLink]="['/band']" >Band</a></li>
             <li><a [routerLink]="['/components']" >Componenti</a></li>
         </ul>
@@ -19,6 +26,7 @@
     </p>
     <div *ngIf="mediaExploded">
         <ul>
+            <li><a [routerLink]="['/media/titles']" >Titoli</a></li>
             <li><a [routerLink]="['/photos']" >Foto</a></li>
             <li><a [routerLink]="['/videos']" >Video</a></li>
             <li><a [routerLink]="['/welcome']" >Immagine di copertina</a></li>
@@ -30,6 +38,7 @@
     </p>
     <div *ngIf="contattiExploded">
         <ul>
+            <li><a [routerLink]="['/contacts/titles']" >Titoli</a></li>
             <li><a [routerLink]="['/contacts']" >Contatti home page</a></li>
             <li><a [routerLink]="['/footer-contacts']" >Contatti footer</a></li>
             <li><a [routerLink]="['/contact-form']" >Form contatto</a></li>
@@ -41,7 +50,8 @@
     </p>
     <div *ngIf="quizExploded">
         <ul>
-            <li><a [routerLink]="['/quiz']" >Pagina principale</a></li>
+            <li><a [routerLink]="['/test/titles']" >Titoli</a></li>
+            <li><a [routerLink]="['/test']" >Pagina principale</a></li>
             <li><a [routerLink]="['/questions']" >Domande e risposte</a></li>
             <li><a [routerLink]="['/results']" >Risultati</a></li>
         </ul>

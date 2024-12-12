@@ -1,0 +1,108 @@
+<div class="row mb-4">
+    <a [routerLink]="['/']" ><i class="fa-solid fa-angles-left"></i> Torna alla home</a>
+</div>
+
+<div class="row">
+
+    <h2 id="title" class="mb-5">{{(editing ? 'Modifica' : 'Dettaglio') + ' titoli eventi'}}</h2>
+
+    <div *ngIf="!editing" class="col-12 mb-4">
+        <h6 class="text-center mb-3">Scegli la lingua da modificare</h6>
+        <div class="row d-flex justify-content-center">
+            <div class="col-6 text-end">
+                <img src="https://coloridelvento.altervista.org/assets/images/it.webp" alt="it" id="it" class="rounded-pill" width="40" 
+                    role="button" (click)="setLang('it')">
+            </div>
+            <div class="col-6">
+                <img src="https://coloridelvento.altervista.org/assets/images/en.webp" alt="en" id="en" class="rounded-pill" width="40" 
+                    role="button" (click)="setLang('en')">
+            </div>
+        </div>
+    </div>
+
+    <form *ngIf="formData && lang" class="h-100" [formGroup]="formData">
+
+        <div *ngIf="formError" class="mb-5">
+            <p class="text-danger fw-bold">{{formError}}</p>
+        </div>
+
+        <ng-container *ngIf="editing; else disabled">
+            <mat-form-field class="form-field w-100 my-1 ms-1">
+                <mat-label>Titolo menù*</mat-label>
+                <input matInput type="text" id="menu" formControlName="menu">
+
+                <mat-error *ngIf="formData.get('menu').invalid && formData.get('menu').touched">
+                    <small class="text-danger"
+                        *ngIf="formData.get('menu').errors?.required">
+                        Campo obbligatorio.
+                    </small>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="formData.get('section').value" class="form-field w-100 my-1 ms-1">
+                <mat-label>Titolo sezione home*</mat-label>
+                <input matInput type="text" id="section" formControlName="section">
+
+                <mat-error *ngIf="formData.get('section').invalid && formData.get('section').touched">
+                    <small class="text-danger"
+                        *ngIf="formData.get('section').errors?.required">
+                        Campo obbligatorio.
+                    </small>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="formData.get('page').value" class="form-field w-100 my-1 ms-1">
+                <mat-label>Titolo pagina*</mat-label>
+                <input matInput type="text" id="page" formControlName="page">
+
+                <mat-error *ngIf="formData.get('page').invalid && formData.get('page').touched">
+                    <small class="text-danger"
+                        *ngIf="formData.get('page').errors?.required">
+                        Campo obbligatorio.
+                    </small>
+                </mat-error>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-template #disabled>
+
+            <div *ngIf="dataSource" class="overflow-auto mb-5">
+                <table mat-table [dataSource]="dataSource" matSort class="w-100 bg-transparent">
+    
+                    <ng-container *ngFor="let col of displayedColumns">
+                        <ng-container [matColumnDef]="col">
+                            <td mat-cell *matCellDef="let element" class="px-3" [class.fw-bold]="col == 'valore'">
+                                <span>{{element[col] ? formatField(element, col) : '-'}}</span>
+                            </td>
+                        </ng-container>
+                    </ng-container>
+                
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                </table>
+            </div>
+
+        </ng-template>
+
+    </form>
+
+</div>
+
+<div *ngIf="formData && lang">
+    <ng-container *ngIf="!editing; else editingCta">
+        <div class="row p-2">
+            <button class="btn btn-primary" (click)="editing = true">Modifica</button>
+        </div>
+    </ng-container>
+    
+    <ng-template #editingCta>
+        <button class="btn btn-primary me-2" (click)="confirm()" [disabled]="!formData.valid">
+            Conferma
+        </button>
+
+        <button class="btn btn-light text-primary border-primary" (click)="cancel()">
+            Annulla
+        </button>
+    </ng-template>
+    
+</div>

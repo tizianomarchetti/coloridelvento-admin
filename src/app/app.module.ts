@@ -36,6 +36,11 @@ import { AnswerComponent } from './component/answer/answer.component';
 import { SingleImageComponent } from './component/single-image/single-image.component';
 import { SocialsComponent } from './component/socials/socials.component';
 import { SocialComponent } from './component/social/social.component';
+import { TitlesComponent } from './component/titles/titles.component';
+import { AboutTitlesComponent } from './component/about-titles/about-titles.component';
+import { MediaTitlesComponent } from './component/media-titles/media-titles.component';
+import { ContactTitlesComponent } from './component/contact-titles/contact-titles.component';
+import { QuizTitlesComponent } from './component/quiz-titles/quiz-titles.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +70,12 @@ import { SocialComponent } from './component/social/social.component';
     AnswerComponent,
     SingleImageComponent,
     SocialsComponent,
-    SocialComponent
+    SocialComponent,
+    TitlesComponent,
+    AboutTitlesComponent,
+    MediaTitlesComponent,
+    ContactTitlesComponent,
+    QuizTitlesComponent
   ],
   imports: [
     BrowserModule,
