@@ -19,7 +19,7 @@ export class ContactForm {
         
         this.form = this.formBuilder.group({
             name: [
-                this.contact.name, [Validators.required]
+                this.contact.name, this._parentComponent.footer ? [Validators.required] : null
             ],
             desc: [
                 this.contact.desc, [Validators.required]
