@@ -41,6 +41,7 @@ import { AboutTitlesComponent } from './component/about-titles/about-titles.comp
 import { MediaTitlesComponent } from './component/media-titles/media-titles.component';
 import { ContactTitlesComponent } from './component/contact-titles/contact-titles.component';
 import { QuizTitlesComponent } from './component/quiz-titles/quiz-titles.component';
+import { ColorsComponent } from './component/colors/colors.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { QuizTitlesComponent } from './component/quiz-titles/quiz-titles.compone
     AboutTitlesComponent,
     MediaTitlesComponent,
     ContactTitlesComponent,
-    QuizTitlesComponent
+    QuizTitlesComponent,
+    ColorsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,95 @@
+<div class="row mb-4">
+    <a [routerLink]="['/']" ><i class="fa-solid fa-angles-left"></i> Torna alla home</a>
+</div>
+
+<div class="row">
+
+    <h2 id="title" class="mb-5">{{(editing ? 'Modifica' : 'Dettaglio') + ' colori'}}</h2>
+
+    <form *ngIf="formData" class="h-100" [formGroup]="formData">
+
+        <div *ngIf="formError" class="mb-5">
+            <p class="text-danger fw-bold">{{formError}}</p>
+        </div>
+
+        <ng-container *ngIf="editing; else disabled">
+            <mat-form-field class="form-field w-100 mt-1 ms-1">
+                <mat-label>Header e menu*</mat-label>
+                <input class="border border-light" [class.w-50]="formData.get('headerGradient').value" matInput type="color" 
+                    id="header_1" formControlName="header_1" (change)="setHeaderColor($event)">
+                <input class="border border-light w-50" *ngIf="formData.get('headerGradient').value" matInput type="color" 
+                    id="header_2" formControlName="header_2" (change)="setHeaderColor($event)">
+            </mat-form-field>
+            <mat-checkbox class="ms-1" color="primary" id="header-gradient" formControlName="headerGradient" (change)="setHeaderGradient($event)">
+                Gradiente</mat-checkbox>
+
+            <mat-form-field *ngIf="formData.get('footer_1').value" class="form-field w-100 mt-5 ms-1">
+                <mat-label>Footer*</mat-label>
+                <input class="border border-light" [class.w-50]="formData.get('footerGradient').value" matInput type="color" 
+                    id="footer_1" formControlName="footer_1" (change)="setFooterColor($event)">
+                <input class="border border-light w-50" *ngIf="formData.get('footerGradient').value" matInput type="color" 
+                    id="footer_2" formControlName="footer_2" (change)="setFooterColor($event)">
+            </mat-form-field>
+            <mat-checkbox class="ms-1" color="primary" id="footer-gradient" formControlName="footerGradient" (change)="setFooterGradient($event)">
+                Gradiente</mat-checkbox>
+
+            <mat-form-field *ngIf="formData.get('btn_1').value" class="form-field w-100 mt-5 ms-1">
+                <mat-label>Bottoni</mat-label>
+                <input class="border border-light" [class.w-50]="formData.get('btnGradient').value" matInput type="color" 
+                    id="btn_1" formControlName="btn_1" (change)="setBtnColor($event)">
+                <input class="border border-light w-50" *ngIf="formData.get('btnGradient').value" matInput type="color" 
+                    id="btn_2" formControlName="btn_2" (change)="setBtnColor($event)">
+            </mat-form-field>
+            <mat-checkbox class="ms-1" color="primary" id="btn-gradient" formControlName="btnGradient" (change)="setBtnGradient($event)">
+                Gradiente</mat-checkbox>
+
+            <mat-form-field *ngIf="formData.get('link').value" class="form-field w-100 mt-5 ms-1">
+                <mat-label>Link</mat-label>
+                <input class="border border-light" matInput type="color" 
+                    id="link" formControlName="link" (change)="setLinkColor($event)">
+            </mat-form-field>
+        </ng-container>
+
+        <ng-template #disabled>
+
+            <div *ngIf="dataSource" class="overflow-auto mb-5">
+                <table mat-table [dataSource]="dataSource" matSort class="w-100 bg-transparent">
+    
+                    <ng-container *ngFor="let col of displayedColumns">
+                        <ng-container [matColumnDef]="col">
+                            <td [ngStyle]="{'background': element[col]}" mat-cell *matCellDef="let element" class="px-3 rounded" [class.fw-bold]="col == 'valore'">
+                                <span [ngStyle]="{'color': scegliColoreTesto(formatField(element, col))}">
+                                    {{element[col] ? formatField(element, col) : '-'}}</span>
+                            </td>
+                        </ng-container>
+                    </ng-container>
+                
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                </table>
+            </div>
+
+        </ng-template>
+
+    </form>
+
+</div>
+
+<div *ngIf="formData">
+    <ng-container *ngIf="!editing; else editingCta">
+        <div class="row p-2">
+            <button class="btn btn-primary" (click)="editing = true">Modifica</button>
+        </div>
+    </ng-container>
+    
+    <ng-template #editingCta>
+        <button class="btn btn-primary me-2 my-5" (click)="confirm()" [disabled]="!formData.valid">
+            Conferma
+        </button>
+
+        <button class="btn btn-light text-primary border-primary my-5" (click)="cancel()">
+            Annulla
+        </button>
+    </ng-template>
+    
+</div>

@@ -30,6 +30,7 @@ import { SingleImageComponent } from './component/single-image/single-image.comp
 import { SocialsComponent } from './component/socials/socials.component';
 import { SocialComponent } from './component/social/social.component';
 import { TitlesComponent } from './component/titles/titles.component';
+import { ColorsComponent } from './component/colors/colors.component';
 
 
 const routes: Routes = [
@@ -325,6 +326,12 @@ const routes: Routes = [
         ]
       }
     ]
+  },
+  {
+    path: "colors",
+    component: ColorsComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuard]
   }
 ];
 
