@@ -21,6 +21,19 @@ export class QuizMapperService {
     }
   }
 
+   mapResultForAnswer(item: any, idRisposta: number): Result {
+    return {
+      id: item['ID'],
+      desc_it: item['DESCRIZIONE_IT'],
+      desc_en: item['DESCRIZIONE_EN'],
+      cartone_it: item['CARTONE_IT'],
+      cartone_en: item['CARTONE_EN'],
+      img: item['IMMAGINE'],
+      fkRisposta: item['FK_RISPOSTA'],
+      checked: item['FK_RISPOSTA'] == idRisposta
+    }
+  }
+
   mapQuestion(item: any): Question {
     return {
       id: item['ID'],

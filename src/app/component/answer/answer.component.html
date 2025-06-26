@@ -5,7 +5,7 @@
 <div class="row">
     <h2 id="title" class="mb-5">{{(editing ? 'Modifica' : 'Dettaglio') + ' risposta'}}</h2>
 
-    <div *ngIf="!editing" class="col-12 mb-4">
+    <div *ngIf="!editing && !editingResults" class="col-12 mb-4">
         <ng-container>
             <div class="col-12 mb-5">
                 <h4 class="text-center">Risposta #{{answer?.valore}}</h4>
@@ -26,11 +26,11 @@
         </div>
     </div>
 
-    <div *ngIf="formData && lang" class="h-100">
+    <div *ngIf="formError" class="mb-5">
+        <p class="text-danger fw-bold">{{formError}}</p>
+    </div>
 
-        <div *ngIf="formError" class="mb-5">
-            <p class="text-danger fw-bold">{{formError}}</p>
-        </div>
+    <div *ngIf="formData && lang && !editingResults" class="h-100">
 
         <ng-container *ngIf="editing; else disabled">
             <form *ngIf="formData" class="h-100" [formGroup]="formData">
@@ -64,7 +64,7 @@
 
 </div>
 
-<div class="mb-5" *ngIf="formData && lang">
+<div class="mb-5" *ngIf="formData && lang && !editingResults">
     <ng-container *ngIf="!editing; else editingCta">
         <div class="row p-2">
             <button class="btn btn-primary" (click)="editing = true">Modifica</button>
@@ -77,6 +77,56 @@
         </button>
 
         <button class="btn btn-light text-primary border-primary" (click)="cancel()">
+            Annulla
+        </button>
+    </ng-template>
+</div>
+
+<div *ngIf="formData && lang && !editing" class="col-12 mb-3 overflow-auto">
+    <p><strong>Risultati associati</strong></p>
+    <table mat-table [dataSource]="dataSource" class="w-100 bg-transparent">
+
+        <ng-container matColumnDef="checked">
+            <th mat-header-cell *matHeaderCellDef class="px-3"></th>
+            <td mat-cell *matCellDef="let element" class="px-3">
+                <mat-checkbox [id]="element.id" [(ngModel)]="element.checked" (click)="stampa(element)" color="primary" [disabled]="!editingResults">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <ng-container *ngFor="let col of getFilteredDisplayedColumns()">
+            <ng-container [matColumnDef]="col">
+                <th mat-header-cell *matHeaderCellDef class="px-3 fw-bold"> {{getColumnLabel(col)}} </th>
+                <td mat-cell *matCellDef="let element" class="px-3">
+                    <span>{{element[col]}}</span>
+                </td>
+            </ng-container>
+        </ng-container>
+
+        <ng-container matColumnDef="noData">
+            <td mat-footer-cell *matFooterCellDef colspan="4" class="text-center border-0">Nessun dato trovato</td>
+            </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="['noData']" [class.d-none]="dataSource?.data.length > 0"></tr>
+
+    </table>
+</div>
+
+<div class="mb-5" *ngIf="formData && lang && !editing">
+    <ng-container *ngIf="!editingResults; else editingResultsCta">
+        <div class="row p-2">
+            <button class="btn btn-primary" (click)="editingResults = true">Modifica risultati associati</button>
+        </div>
+    </ng-container>
+    
+    <ng-template #editingResultsCta>
+        <button class="btn btn-primary me-2" (click)="confirmResults()" [disabled]="disableConfirmResults()">
+            Conferma
+        </button>
+
+        <button class="btn btn-light text-primary border-primary" (click)="cancelResults()">
             Annulla
         </button>
     </ng-template>

@@ -5,4 +5,6 @@ export class Result {
     cartone_it: string;
     cartone_en: string;
     img: string;
+    fkRisposta?: number;
+    checked?: boolean;
 }

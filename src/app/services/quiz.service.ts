@@ -10,6 +10,7 @@ import { Answer } from '../interface/answer';
 })
 export class QuizService {
   resultsUrl: string = ROOT + 'quiz/result/getAll';
+  resultsForAnswerUrl: string = ROOT + 'quiz/result/getAllForAnswer';
   resultUrl: string = ROOT + 'quiz/result/getById';
   updateResultUrl: string = ROOT + 'quiz/result/update';
 
@@ -20,11 +21,16 @@ export class QuizService {
   answersUrl: string = ROOT + 'quiz/answer/getAll';
   answerUrl: string = ROOT + 'quiz/answer/getById';
   updateAnswerUrl: string = ROOT + 'quiz/answer/update';
+  updateAnswerResultsUrl: string = ROOT + 'quiz/answer/updateResults';
 
   constructor(private http: HttpClient) { }
 
   getResults() {
     return this.http.get(this.resultsUrl);
+  }
+
+  getResultsForAnswer() {
+    return this.http.get(this.resultsForAnswerUrl);
   }
 
   getResult(id: number) {
@@ -66,5 +72,9 @@ export class QuizService {
 
   editAnswer(answer: Answer, id: number) {
     return this.http.put(this.updateAnswerUrl, { answer, id });
+  }
+
+  editAnswerResults(results: Result[], answerId: number) {
+    return this.http.put(this.updateAnswerResultsUrl, { answerId, results });
   }
 }
