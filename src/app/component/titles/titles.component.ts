@@ -36,7 +36,6 @@ export class TitlesComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private dictService: DictionaryService, private dialog: MatDialog, private cdr: ChangeDetectorRef) { 
     route.parent.url.subscribe(path => {
-      console.log(path)
       this.section = path[0].path;
     })
   }

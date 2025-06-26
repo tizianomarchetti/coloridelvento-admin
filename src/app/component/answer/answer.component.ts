@@ -78,10 +78,6 @@ export class AnswerComponent implements OnInit {
     return this.displayedColumns.filter(el => el != 'checked')
   }
 
-  stampa(el: any) {
-    console.log(el);
-  }
-
   getAnswer(initForm: boolean = true) {
     this.quizService.getAnswer(this.id).subscribe((result: any) => {
       this.answer = this.quizMapper.mapAnswer(result);
@@ -90,7 +86,6 @@ export class AnswerComponent implements OnInit {
       this.results = [];
       this.quizService.getResultsForAnswer().subscribe((res: any) => {
         this.results = res.map(el => this.quizMapper.mapResultForAnswer(el, this.id));
-        console.log(this.results);
 
         this.dataSource = new MatTableDataSource();
 
