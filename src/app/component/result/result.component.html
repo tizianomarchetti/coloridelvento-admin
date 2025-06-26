@@ -8,7 +8,7 @@
     <div *ngIf="!editing" class="col-12 mb-4">
         <ng-container>
             <div class="col-12 mb-5">
-                <h4 class="text-center">Maggioranza di risposte {{result?.most_answers}}</h4>
+                <h4 class="text-center">{{result?.desc_it}}</h4>
             </div>
         </ng-container>
 
@@ -35,11 +35,23 @@
             <form *ngIf="formData" class="h-100" [formGroup]="formData">
                 <mat-form-field class="form-field w-100 my-1 ms-1">
                     <mat-label>Titolo*</mat-label>
-                    <input matInput type="text" id="title" formControlName="title">
+                    <input matInput type="text" id="desc" formControlName="desc">
 
-                    <mat-error *ngIf="formData.get('title').invalid && formData.get('title').touched">
+                    <mat-error *ngIf="formData.get('desc').invalid && formData.get('desc').touched">
                         <small class="text-danger"
-                            *ngIf="formData.get('title').errors?.required">
+                            *ngIf="formData.get('desc').errors?.required">
+                            Campo obbligatorio.
+                        </small>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-field w-100 my-1 ms-1">
+                    <mat-label>Cartone*</mat-label>
+                    <input matInput type="text" id="cartone" formControlName="cartone">
+
+                    <mat-error *ngIf="formData.get('cartone').invalid && formData.get('cartone').touched">
+                        <small class="text-danger"
+                            *ngIf="formData.get('cartone').errors?.required">
                             Campo obbligatorio.
                         </small>
                     </mat-error>
@@ -61,18 +73,6 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="form-field w-100 my-1 ms-1">
-                    <mat-label>Testo*</mat-label>
-                    <textarea matInput formControlName="text" id="text" rows="4"></textarea>
-    
-                    <mat-error *ngIf="formData.get('text').invalid && formData.get('text').touched">
-                        <small class="text-danger"
-                            *ngIf="formData.get('text').errors?.required">
-                            Campo obbligatorio.
-                        </small>
-                    </mat-error>
-                </mat-form-field>
-
             </form>
 
         </ng-container>
@@ -81,13 +81,10 @@
 
             <hr>
             <div class="col-12 mb-3">
-                <h5>{{dictionary.section.test.results[result.most_answers].title}}</h5>
+                <h5>{{result['desc_' + lang]}} - {{result['cartone_' + lang]}}</h5>
             </div>
             <div class="col-12 mb-3 text-center">
-                <img [src]="'https://coloridelvento.altervista.org/assets/images/' + result.img" [alt]="result.most_answers" width="100">
-            </div>
-            <div class="col-12 mb-5">
-                <p>{{dictionary.section.test.results[result.most_answers].text}}</p>
+                <img [src]="'https://coloridelvento.altervista.org/assets/images/' + result.img" [alt]="result['desc_' + lang]" width="100">
             </div>
 
         </ng-template>

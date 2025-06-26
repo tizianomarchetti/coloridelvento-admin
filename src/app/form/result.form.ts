@@ -18,11 +18,11 @@ export class ResultForm {
         this.result = this._parentComponent.result || new Result();
         
         this.form = this.formBuilder.group({
-            title: [
-                this._parentComponent.dictionary.section.test.results[this.result.most_answers].title, [Validators.required]
+            desc: [
+                this.result['desc_' + this._parentComponent.lang], [Validators.required]
             ],
-            text: [
-                this._parentComponent.dictionary.section.test.results[this.result.most_answers].text, [Validators.required]
+            cartone: [
+                this.result['cartone_' + this._parentComponent.lang], [Validators.required]
             ],
             img: [
                 this.result.img, [Validators.required]
@@ -30,9 +30,9 @@ export class ResultForm {
         });
     }
 
-    get title() { return this.form.get('title') }
+    get desc() { return this.form.get('desc') }
 
-    get text() { return this.form.get('text') }
+    get cartone() { return this.form.get('cartone') }
 
     get img() { return this.form.get('img') }
 

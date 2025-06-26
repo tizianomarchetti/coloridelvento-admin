@@ -129,8 +129,8 @@ export class ResultComponent implements OnInit {
     if (!this.formData) return false;
 
     return this.isModifiedValue(this.formData.value.img, this.result.img)
-      || this.formData.value.title != this.dictionary.section.test.results[this.result.most_answers].title
-      || this.formData.value.text != this.dictionary.section.test.results[this.result.most_answers].text
+      || this.formData.value.desc != this.result['desc_' + this.lang]
+      || this.formData.value.cartone != this.result['cartone_' + this.lang]
   }
 
   isModifiedValue(firstValue, secondValue) {
@@ -146,14 +146,10 @@ export class ResultComponent implements OnInit {
   }
 
   edit() {
-    const result: Result = {
-      id: this.id,
-      most_answers: this.result.most_answers,
-      img: this.formData.get('img').value
-    };
-    this.dictionary.section.test.results[result.most_answers].title = this.formData.get('title').value;
-    this.dictionary.section.test.results[result.most_answers].text = this.formData.get('text').value;
-    this.quizService.editResult(result, this.id, this.image, this.dictionary, this.lang, this.result.img).subscribe((res: any) => {
+    this.result['desc_' + this.lang] = this.formData.value.desc;
+    this.result['cartone_' + this.lang] = this.formData.value.cartone;
+    this.result.img = this.formData.get('img').value;
+    this.quizService.editResult(this.result, this.id, this.image, this.dictionary, this.lang, this.result.img).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,

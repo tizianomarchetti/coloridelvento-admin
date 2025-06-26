@@ -13,7 +13,10 @@ export class QuizMapperService {
   mapResult(item: any): Result {
     return {
       id: item['ID'],
-      most_answers: item['MAGGIORANZA_RISPOSTE'],
+      desc_it: item['DESCRIZIONE_IT'],
+      desc_en: item['DESCRIZIONE_EN'],
+      cartone_it: item['CARTONE_IT'],
+      cartone_en: item['CARTONE_EN'],
       img: item['IMMAGINE']
     }
   }

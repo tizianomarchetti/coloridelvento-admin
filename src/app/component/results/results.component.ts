@@ -27,15 +27,15 @@ export class ResultsComponent implements OnInit {
     private quizMapper: QuizMapperService, private dictService: DictionaryService) { }
 
   ngOnInit() {
-    this.displayedColumns = ['most_answers', 'title'];
+    this.displayedColumns = ['desc_it', 'cartone_it'];
     this.columnLabels = [
       {
-        id: 'most_answers',
-        label: 'Maggioranza risposte'
+        id: 'desc_it',
+        label: 'Descrizione (IT)'
       },
       {
-        id: 'title',
-        label: 'Titolo'
+        id: 'cartone_it',
+        label: 'Cartone (IT)'
       }
     ];
 
@@ -74,16 +74,18 @@ export class ResultsComponent implements OnInit {
       });
     });
 
-    this.dictService.getDictionary('it').subscribe((res: any) => {
-      this.dictionary = JSON.parse(res.result);
+    this.setPaginator();
 
-      this.dataSource.data.forEach(el => {
-        el.title = this.dictionary.section.test.results[el.most_answers].title;
-        el.most_answers = el.most_answers.toUpperCase();
-      });
+    // this.dictService.getDictionary('it').subscribe((res: any) => {
+    //   this.dictionary = JSON.parse(res.result);
 
-      this.setPaginator();
-    });
+    //   this.dataSource.data.forEach(el => {
+    //     el.title = this.dictionary.section.test.results[el.most_answers].title;
+    //     el.most_answers = el.most_answers.toUpperCase();
+    //   });
+
+    //   this.setPaginator();
+    // });
   }
 
   getColumnLabel(colId: string) {
