@@ -16,6 +16,7 @@ import { Result } from 'src/app/interface/result';
 })
 export class AnswerComponent implements OnInit {
   questionId: number;
+  questionTitle: string;
   id: number;
   answer: Answer;
   answerTitle: string;
@@ -61,7 +62,17 @@ export class AnswerComponent implements OnInit {
         }
       ];
 
+      this.getQuestionTitle();
       this.getAnswer(false);
+    });
+  }
+
+  getQuestionTitle() {
+    this.quizService.getQuestion(this.questionId).subscribe((result: any) => {
+      this.questionTitle = this.quizMapper.mapQuestion(result)['title_' + (this.lang || 'it')];
+      console.log(this.questionTitle);
+    }, (error) => {
+      console.error(error);
     });
   }
 
@@ -84,7 +95,7 @@ export class AnswerComponent implements OnInit {
       if (initForm) this.initForm();
 
       this.results = [];
-      this.quizService.getResultsForAnswer().subscribe((res: any) => {
+      this.quizService.getResultsForAnswer(this.id).subscribe((res: any) => {
         this.results = res.map(el => this.quizMapper.mapResultForAnswer(el, this.id));
 
         this.dataSource = new MatTableDataSource();
@@ -110,6 +121,7 @@ export class AnswerComponent implements OnInit {
 
   setLang(lang: string) {
     this.lang = lang;
+    this.getQuestionTitle();
     this.initForm();
     this.setDynamicFieldsDataSource();
   }

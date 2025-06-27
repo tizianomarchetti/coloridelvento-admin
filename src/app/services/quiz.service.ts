@@ -29,8 +29,8 @@ export class QuizService {
     return this.http.get(this.resultsUrl);
   }
 
-  getResultsForAnswer() {
-    return this.http.get(this.resultsForAnswerUrl);
+  getResultsForAnswer(answerId: number) {
+    return this.http.get(this.resultsForAnswerUrl, { params: { answerId: answerId.toString() } });
   }
 
   getResult(id: number) {
