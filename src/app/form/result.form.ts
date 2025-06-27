@@ -24,6 +24,9 @@ export class ResultForm {
             cartone: [
                 this.result['cartone_' + this._parentComponent.lang], [Validators.required]
             ],
+            text: [
+                this.result['text_' + this._parentComponent.lang], [Validators.required]
+            ],
             img: [
                 this.result.img, [Validators.required]
             ]
@@ -33,6 +36,8 @@ export class ResultForm {
     get desc() { return this.form.get('desc') }
 
     get cartone() { return this.form.get('cartone') }
+
+    get text() { return this.form.get('text') }
 
     get img() { return this.form.get('img') }
 

@@ -17,6 +17,8 @@ export class QuizMapperService {
       desc_en: item['DESCRIZIONE_EN'],
       cartone_it: item['CARTONE_IT'],
       cartone_en: item['CARTONE_EN'],
+      text_it: item['TESTO_IT'],
+      text_en: item['TESTO_EN'],
       img: item['IMMAGINE']
     }
   }
@@ -28,6 +30,8 @@ export class QuizMapperService {
       desc_en: item['DESCRIZIONE_EN'],
       cartone_it: item['CARTONE_IT'],
       cartone_en: item['CARTONE_EN'],
+      text_it: item['TESTO_IT'],
+      text_en: item['TESTO_EN'],
       img: item['IMMAGINE'],
       fkRisposta: item['FK_RISPOSTA'],
       checked: item['FK_RISPOSTA'] == idRisposta
