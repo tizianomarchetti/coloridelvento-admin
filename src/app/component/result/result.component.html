@@ -74,15 +74,8 @@
                 </mat-form-field>
 
                 <mat-form-field class="form-field w-100 my-1 ms-1">
-                    <mat-label>Testo*</mat-label>
+                    <mat-label>Testo</mat-label>
                     <input matInput type="text" id="text" formControlName="text">
-
-                    <mat-error *ngIf="formData.get('text').invalid && formData.get('text').touched">
-                        <small class="text-danger"
-                            *ngIf="formData.get('text').errors?.required">
-                            Campo obbligatorio.
-                        </small>
-                    </mat-error>
                 </mat-form-field>
 
             </form>

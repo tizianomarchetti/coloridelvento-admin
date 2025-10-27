@@ -125,7 +125,7 @@ export class PhotosComponent implements OnInit {
     const seen = new Set();
 
     for (const el of this.dataSource.data.map(el => el.order)) {
-      if (seen.has(el)) {
+      if (el && seen.has(el)) {
         uniqueOrderValues = false;
         break;
       }

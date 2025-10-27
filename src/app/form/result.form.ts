@@ -25,7 +25,7 @@ export class ResultForm {
                 this.result['cartone_' + this._parentComponent.lang], [Validators.required]
             ],
             text: [
-                this.result['text_' + this._parentComponent.lang], [Validators.required]
+                this.result['text_' + this._parentComponent.lang]
             ],
             img: [
                 this.result.img, [Validators.required]
