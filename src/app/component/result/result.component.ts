@@ -150,8 +150,8 @@ export class ResultComponent implements OnInit {
     this.result['desc_' + this.lang] = this.formData.value.desc;
     this.result['cartone_' + this.lang] = this.formData.value.cartone;
     this.result['text_' + this.lang] = this.formData.value.text;
-    this.result.img = this.formData.get('img').value;
-    this.quizService.editResult(this.result, this.id, this.image, this.dictionary, this.lang, this.result.img).subscribe((res: any) => {
+    const img = this.formData.get('img').value;
+    this.quizService.editResult({...this.result, img}, this.id, this.image, this.dictionary, this.lang, this.result.img).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
           body: res.message,
