@@ -48,6 +48,21 @@
                     </small>
                 </mat-error>
             </mat-form-field>
+
+            <mat-checkbox class="ms-1 my-1" color="primary" id="flagGratuito" formControlName="flagGratuito">
+                Gratuito</mat-checkbox>
+
+            <mat-form-field class="form-field w-100 my-1 ms-1">
+                <mat-label>Url biglietti</mat-label>
+                <input matInput type="text" id="ticketUrl" formControlName="ticketUrl">
+
+                <mat-error *ngIf="formData.get('ticketUrl').invalid && formData.get('ticketUrl').touched">
+                    <small class="text-danger"
+                        *ngIf="formData.get('ticketUrl').errors?.required">
+                        Campo obbligatorio.
+                    </small>
+                </mat-error>
+            </mat-form-field>
         </ng-container>
 
         <ng-template #disabled>
@@ -58,7 +73,7 @@
                     <ng-container *ngFor="let col of displayedColumns">
                         <ng-container [matColumnDef]="col">
                             <td mat-cell *matCellDef="let element" class="px-3" [class.fw-bold]="col == 'valore'">
-                                <span>{{element[col] ? formatField(element, col) : '-'}}</span>
+                                <span>{{element[col] != null ? formatField(element, col) : '-'}}</span>
                             </td>
                         </ng-container>
                     </ng-container>

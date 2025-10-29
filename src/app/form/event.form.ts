@@ -11,6 +11,8 @@ export class EventForm {
     /** _parentComponent */
     _parentComponent: any;
 
+    lastTicketUrlValue: string = null;
+
     constructor(parentComponent: any) {
         this.formBuilder = new FormBuilder();
         this._parentComponent = parentComponent;
@@ -26,7 +28,25 @@ export class EventForm {
             ],
             time: [
                 this.event.time, [Validators.required]
+            ],
+            flagGratuito: [
+                this.event.flagGratuito
+            ],
+            ticketUrl: [
+                this.event.ticketUrl
             ]
+        });
+
+        // Aggancia la logica di disabilitazione dinamica
+        this.flagGratuito.valueChanges.subscribe((gratuito) => {
+            if (gratuito) {
+                this.ticketUrl.disable();
+                this.lastTicketUrlValue = this.ticketUrl.value;
+                this.ticketUrl.setValue(null);
+            } else {
+                this.ticketUrl.enable();
+                this.ticketUrl.setValue(this.lastTicketUrlValue);
+            }
         });
     }
 
@@ -35,5 +55,9 @@ export class EventForm {
     get date() { return this.form.get('date') }
 
     get time() { return this.form.get('time') }
+
+    get flagGratuito() { return this.form.get('flagGratuito') }
+
+    get ticketUrl() { return this.form.get('ticketUrl') }
 
 }

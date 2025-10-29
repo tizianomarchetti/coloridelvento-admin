@@ -54,6 +54,14 @@ export class EventComponent implements OnInit, IFormComponent {
       {
         id: 'time',
         label: 'Ora'
+      },
+      {
+        id: 'flagGratuito',
+        label: 'Gratuito'
+      },
+      {
+        id: 'ticketUrl',
+        label: 'Url biglietti'
       }
     ];
     
@@ -85,6 +93,7 @@ export class EventComponent implements OnInit, IFormComponent {
     this.dataSource = new MatTableDataSource();
     this.eventService.getEvent(this.id).subscribe((event: any) => {
       this.event = this.eventMapper.mapEvent(event);
+      console.log(this.event);
       this.initForm();
       this.setDataSource();
     })
@@ -104,12 +113,15 @@ export class EventComponent implements OnInit, IFormComponent {
   }
 
   formatField(element, col) {
+    console.log(element, col);
     if (col == 'valore') {
-      if (element.valore) {
+      if (element.valore != null) {
         if (element.criterio == 'date')
           return this.eventMapper.formatDateFromBe(element.valore)
         else if (element.criterio == 'time')
           return this.eventMapper.formatTimeFromBe(element.valore)
+        else if (element.criterio == 'flagGratuito')
+          return element.valore == true ? 'Sì' : 'No'
         else return element.valore
       }
       else return '-';
@@ -198,6 +210,7 @@ export class EventComponent implements OnInit, IFormComponent {
   }
 
   create(event: Evento) {
+    if (event.ticketUrl === '') event.ticketUrl = null;
     this.eventService.create(event).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {
@@ -221,6 +234,7 @@ export class EventComponent implements OnInit, IFormComponent {
   }
 
   edit(event: Evento) {
+    if (event.ticketUrl === '') event.ticketUrl = null;
     this.eventService.edit(event, this.id).subscribe((res: any) => {
       this.dialog.open(ModaleComponent, {
         data: {

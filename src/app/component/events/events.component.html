@@ -33,7 +33,7 @@
                 <ng-container [matColumnDef]="col">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef class="px-3 fw-bold"> {{getColumnLabel(col)}} </th>
                     <td mat-cell *matCellDef="let element" class="px-3" (click)="navigateTo(element)" role="button">
-                        <span>{{element[col]}}</span>
+                        <span>{{col == 'flagGratuito' ? (element[col] == true ? 'Sì' : 'No') : element[col]}}</span>
                     </td>
                 </ng-container>
             </ng-container>

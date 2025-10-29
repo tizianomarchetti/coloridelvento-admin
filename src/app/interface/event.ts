@@ -3,4 +3,10 @@ export class Evento {
     location: string;
     date: string;
     time: string;
+    flagGratuito?: boolean;
+    ticketUrl?: string;
+
+    constructor() {
+        this.flagGratuito = false;
+    }
 }

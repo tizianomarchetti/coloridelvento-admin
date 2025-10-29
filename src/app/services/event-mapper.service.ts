@@ -13,7 +13,9 @@ export class EventMapperService {
       id: item['ID'],
       location: item['LUOGO'],
       date: item['DATA'],//this.formatDateFromBe(item['DATA']),
-      time: item['ORA']// ? this.formatTimeFromBe(item['ORA']) : null
+      time: item['ORA'],// ? this.formatTimeFromBe(item['ORA']) : null
+      flagGratuito: item['FLAG_GRATUITO'],
+      ticketUrl: item['TICKET_URL']
     }
   }
 

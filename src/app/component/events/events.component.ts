@@ -29,7 +29,7 @@ export class EventsComponent implements OnInit {
     private eventMapper: EventMapperService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.displayedColumns = ['checked', 'location', 'date', 'time'];
+    this.displayedColumns = ['checked', 'location', 'date', 'time', 'flagGratuito', 'ticketUrl'];
     this.columnLabels = [
       {
         id: 'location',
@@ -42,6 +42,14 @@ export class EventsComponent implements OnInit {
       {
         id: 'time',
         label: 'Ora'
+      },
+      {
+        id: 'flagGratuito',
+        label: 'Gratuito'
+      },
+      {
+        id: 'ticketUrl',
+        label: 'Url biglietti'
       }
     ];
 
