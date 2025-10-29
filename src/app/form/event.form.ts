@@ -37,6 +37,11 @@ export class EventForm {
             ]
         });
 
+        if (this.event.flagGratuito) {
+            this.ticketUrl.disable();
+            this.ticketUrl.setValue(null);
+        }
+
         // Aggancia la logica di disabilitazione dinamica
         this.flagGratuito.valueChanges.subscribe((gratuito) => {
             if (gratuito) {

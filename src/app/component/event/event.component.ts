@@ -93,7 +93,6 @@ export class EventComponent implements OnInit, IFormComponent {
     this.dataSource = new MatTableDataSource();
     this.eventService.getEvent(this.id).subscribe((event: any) => {
       this.event = this.eventMapper.mapEvent(event);
-      console.log(this.event);
       this.initForm();
       this.setDataSource();
     })
@@ -113,7 +112,6 @@ export class EventComponent implements OnInit, IFormComponent {
   }
 
   formatField(element, col) {
-    console.log(element, col);
     if (col == 'valore') {
       if (element.valore != null) {
         if (element.criterio == 'date')

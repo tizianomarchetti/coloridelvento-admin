@@ -70,7 +70,6 @@ export class AnswerComponent implements OnInit {
   getQuestionTitle() {
     this.quizService.getQuestion(this.questionId).subscribe((result: any) => {
       this.questionTitle = this.quizMapper.mapQuestion(result)['title_' + (this.lang || 'it')];
-      console.log(this.questionTitle);
     }, (error) => {
       console.error(error);
     });
